@@ -14,16 +14,17 @@
     "@astrojs/react": "^3.6.2",
     "@portabletext/types": "^2.0.13",
     "@sanity/astro": "^3.1.4",
-    "@sanity/client": "^6.21.2",
+    "@sanity/client": "^6.21.3",
     "@sanity/image-url": "^1.0.2",
     "@sanity/visual-editing": "^2.1.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "astro": "^4.13.3",
+    "astro": "^4.14.2",
     "astro-portabletext": "^0.10.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sanity": "^3.53.0",
-    "typescript": "^5.5.4"
+    "sanity": "^3.54.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.1"
   }
 }
