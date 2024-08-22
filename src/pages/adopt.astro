@@ -1,0 +1,76 @@
+---
+import { loadQuery } from "../sanity/lib/load-query";
+import Layout from "../layouts/Layout.astro";
+import ApplicationCard from "../components/ApplicationCard.astro";
+
+interface AdoptionItem {
+    title: string;
+    bulletPoints: string[];
+}
+
+// Fetch specific adoption items by title
+const { data: adoptionItem1 } = await loadQuery<AdoptionItem>({
+    query: `*[_type == "adoption" && title == "Requirements"][0]{title, bulletPoints}`,
+});
+
+const { data: adoptionItem2 } = await loadQuery<AdoptionItem>({
+    query: `*[_type == "adoption" && title == "Adoption Process"][0]{title, bulletPoints}`,
+});
+
+const { data: adoptionItem3 } = await loadQuery<AdoptionItem>({
+    query: `*[_type == "adoption" && title == "Adoption Fees"][0]{title, bulletPoints}`,
+});
+
+const { data: adoptionItem4 } = await loadQuery<AdoptionItem>({
+    query: `*[_type == "adoption" && title == "Dewormers and preventatives"][0]{title, bulletPoints}`,
+});
+
+const { data: adoptionItem5 } = await loadQuery<AdoptionItem>({
+    query: `*[_type == "adoption" && title == "Tests, vaccines, surgery"][0]{title, bulletPoints}`,
+});
+
+const { data: formUrl } = await loadQuery<{ formUrl: string }>({
+    query: `*[_type == "googleForm"][0]{formUrl}`,
+});
+---
+
+<Layout title="Adoption Information">
+    <section class="bg-gray-100 p-8">
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">{adoptionItem1.title}</h2>
+            <ul class="list-disc list-inside text-lg space-y-2">
+                {adoptionItem1.bulletPoints.map((point) => <li>{point}</li>)}
+            </ul>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">{adoptionItem2.title}</h2>
+            <ul class="list-disc list-inside text-lg space-y-2">
+                {adoptionItem2.bulletPoints.map((point) => <li>{point}</li>)}
+            </ul>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">{adoptionItem3.title}</h2>
+            <ul class="list-disc list-inside text-lg space-y-2">
+                {adoptionItem3.bulletPoints.map((point) => <li>{point}</li>)}
+            </ul>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">{adoptionItem4.title}</h2>
+            <ul class="list-disc list-inside text-lg space-y-2">
+                {adoptionItem4.bulletPoints.map((point) => <li>{point}</li>)}
+            </ul>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">{adoptionItem5.title}</h2>
+            <ul class="list-disc list-inside text-lg space-y-2">
+                {adoptionItem5.bulletPoints.map((point) => <li>{point}</li>)}
+            </ul>
+        </div>
+    </section>
+
+    <ApplicationCard title="Adoption" formUrl={formUrl.formUrl} />
+</Layout>

@@ -1,0 +1,43 @@
+---
+import Button from "./Button.astro";
+
+interface Props {
+    title: string;
+    formUrl: string;
+}
+
+const { title, formUrl } = Astro.props;
+---
+
+<section class="bg-gray-50 py-16 px-8 md:px-16">
+    <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl font-bold text-gray-900 mb-6">
+            {title} Application
+        </h1>
+        <p class="text-lg text-gray-700 mb-4">
+            After reading our <span class="font-semibold"
+                >{title} Requirements & Process</span
+            >, click the button below to fill out the application or use the
+            form embedded below.
+        </p>
+        <p class="text-md text-gray-700 mb-5">
+            If you're having trouble viewing the form on your browser, please
+            click the "Start Now" button
+        </p>
+        <Button
+            label="Start Now"
+            href={formUrl}
+            variant="primary"
+            size="large"
+        />
+        <div class="relative h-[800px] w-full mt-5 mb-8">
+            <iframe
+                src={formUrl}
+                class="absolute top-0 left-0 w-full h-full border-none rounded-lg"
+                allowfullscreen
+            >
+                Loading…
+            </iframe>
+        </div>
+    </div>
+</section>

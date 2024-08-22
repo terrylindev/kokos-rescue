@@ -1,0 +1,41 @@
+---
+import { loadQuery } from "../sanity/lib/load-query";
+import Layout from "../layouts/Layout.astro";
+
+interface DonationMethod {
+    name: string;
+    url: string;
+}
+
+// Fetch donation methods data from Sanity
+const { data: donationMethods } = await loadQuery<DonationMethod[]>({
+    query: `*[_type == "donationMethod"]{name, url}`,
+});
+---
+
+<Layout title="Donate">
+    <section class="bg-gray-100 p-8">
+        <h1 class="text-3xl font-bold mb-6">Support Our Rescue</h1>
+        <p class="text-lg mb-8">
+            Your donation helps us rescue and care for cats in need. Choose one
+            of the methods below to make your contribution:
+        </p>
+
+        <div class="space-y-4">
+            {
+                donationMethods.map((method) => (
+                    <div class="bg-white p-4 rounded shadow-md">
+                        <h2 class="text-xl font-bold mb-2">{method.name}</h2>
+                        <a
+                            href={method.url}
+                            target="_blank"
+                            class="text-blue-500 hover:underline"
+                        >
+                            Donate via {method.name}
+                        </a>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+</Layout>

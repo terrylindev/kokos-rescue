@@ -1,0 +1,35 @@
+---
+import { loadQuery } from "../sanity/lib/load-query";
+import Button from "./Button.astro";
+
+interface HeroTextData {
+    mainText: string;
+    subText: string;
+}
+
+// Fetch hero text data from Sanity
+const { data: heroTextData } = await loadQuery<HeroTextData>({
+    query: `*[_type == "heroText"][0]{mainText, subText}`,
+});
+
+const { mainText, subText } = heroTextData;
+---
+
+<section class="">
+    <h2 class="text-4xl font-bold mb-4">{mainText}</h2>
+    <p class="text-xl mb-8">{subText}</p>
+    <div class="flex justify-center space-x-4">
+        <Button
+            label="Save A Life"
+            href={"/donate"}
+            variant="primary"
+            size="medium"
+        />
+        <Button
+            label="View Our Cats"
+            href={"/cats"}
+            variant="secondary"
+            size="medium"
+        />
+    </div>
+</section>

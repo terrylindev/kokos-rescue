@@ -16,9 +16,11 @@ const visualEditingEnabled =
 
 <html lang="en">
   <Head title={title} />
-  <body>
+  <body class="flex flex-col min-h-screen px-8 md:px-16">
     <Header />
-    <slot />
+    <main class="flex-grow mx-auto py-8">
+      <slot />
+    </main>
     <Footer />
     <VisualEditing enabled={visualEditingEnabled} />
   </body>

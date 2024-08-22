@@ -1,14 +1,136 @@
 ---
-
+const currentPath = Astro.url.pathname;
 ---
 
 <nav>
-  <ul>
-    <li><a href="{{ '/' | url }}">Home</a></li>
-    <li><a href="{{ '/about' | url }}">About</a></li>
-    <li><a href="{{ '/cats' | url }}">Cats</a></li>
-    <li><a href="{{ '/adopt' | url }}">Adopt</a></li>
-    <li><a href="{{ '/foster' | url }}">Foster</a></li>
-    <li><a href="{{ '/contact' | url }}">Contact</a></li>
+  <ul
+    class="flex flex-col md:flex-row md:space-x-4 text-sm font-medium py-0 md:px-0"
+  >
+    <li>
+      <a
+        href="/"
+        class={`nav-link block ${currentPath === "/" ? "active" : ""}`}>Home</a
+      >
+    </li>
+    <li>
+      <a
+        href="/about"
+        class={`nav-link block ${currentPath === "/about" ? "active" : ""}`}
+        >About</a
+      >
+    </li>
+    <li>
+      <a
+        href="/cats"
+        class={`nav-link block ${currentPath === "/cats" ? "active" : ""}`}
+        >Cats</a
+      >
+    </li>
+    <li>
+      <a
+        href="/adopt"
+        class={`nav-link block ${currentPath === "/adopt" ? "active" : ""}`}
+        >Adopt</a
+      >
+    </li>
+    <li>
+      <a
+        href="/foster"
+        class={`nav-link block ${currentPath === "/foster" ? "active" : ""}`}
+        >Foster</a
+      >
+    </li>
+    <li>
+      <a
+        href="/contact"
+        class={`nav-link block ${currentPath === "/contact" ? "active" : ""}`}
+        >Contact</a
+      >
+    </li>
   </ul>
 </nav>
+
+<style>
+  .nav-link {
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 3px;
+    position: relative;
+    text-align: center;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: #f9605b;
+    background-color: #fae0db;
+  }
+
+  /* Add the underline effect */
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    background-color: #f9605b;
+  }
+
+  /* Centering the menu items */
+  #nav-menu ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  #nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Medium and above screens */
+  @media (min-width: 768px) {
+    .nav-link {
+      padding: 8px 16px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: #fae0db;
+      color: #f9605b;
+      border-radius: 3px;
+    }
+
+    .nav-link::after {
+      bottom: -2px;
+    }
+
+    #nav-menu ul {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #nav-menu {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
+  }
+</style>

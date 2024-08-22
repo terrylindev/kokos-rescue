@@ -1,0 +1,13 @@
+---
+interface Props {
+    description: string;
+    embedHtml: string;
+}
+
+const { description, embedHtml } = Astro.props;
+---
+
+<div class="card">
+    <h3>{description}</h3>
+    <div set:html={embedHtml} />
+</div>

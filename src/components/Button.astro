@@ -1,0 +1,58 @@
+---
+interface Props {
+    label: string;
+    href: string;
+    variant?: "primary" | "secondary";
+    size?: "small" | "medium" | "large";
+}
+
+const { label, href, variant = "primary", size = "medium" } = Astro.props;
+
+const baseClasses =
+    "inline-block rounded-sm font-medium transition-transform transform hover:scale-105 border border-black";
+const sizeClasses =
+    size === "small"
+        ? "px-4 py-2 text-sm"
+        : size === "large"
+          ? "px-8 py-4 text-lg"
+          : "px-6 py-3";
+const variantClasses =
+    variant === "secondary"
+        ? "bg-secondary text-secondary hover:bg-secondary-hover"
+        : "bg-primary text-white hover:bg-primary-hover";
+const classes = `${baseClasses} ${sizeClasses} ${variantClasses}`;
+---
+
+<a href={href} class={classes + " shadow-button"}>
+    {label}
+</a>
+
+<style>
+    .bg-primary {
+        background-color: #f6615a;
+    }
+
+    .bg-secondary {
+        background-color: #fdfdfc;
+    }
+
+    .hover\:bg-primary-hover:hover {
+        background-color: #f86f69;
+    }
+
+    .hover\:bg-secondary-hover:hover {
+        background-color: #f0f0f0;
+    }
+
+    .text-primary {
+        color: #fdfdfc;
+    }
+
+    .text-secondary {
+        color: #f6615a;
+    }
+
+    .shadow-button {
+        box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
+    }
+</style>

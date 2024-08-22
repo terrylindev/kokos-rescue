@@ -1,0 +1,32 @@
+---
+import { loadQuery } from "../sanity/lib/load-query";
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+
+interface AboutData {
+    title: string;
+    content: string;
+}
+
+// Fetch about page data from Sanity
+const { data: aboutData } = await loadQuery<AboutData>({
+    query: `*[_type == "about"][0]{title, content}`,
+});
+
+const { title, content } = aboutData;
+---
+
+<Layout title={title}>
+    <section class="bg-gray-100 p-8">
+        <h1 class="text-3xl font-bold mb-4">{title}</h1>
+        <div class="text-lg text-gray-700 space-y-4">
+            {content.split("\n").map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+    </section>
+    <Button
+        label="Save A Life"
+        href={"/donate"}
+        variant="primary"
+        size="medium"
+    />
+</Layout>
