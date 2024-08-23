@@ -1,0 +1,4 @@
+user-agent: *
+Disallow: /studio/
+Allow: /
+Sitemap: https://kokosrescue.com/sitemap.xml
