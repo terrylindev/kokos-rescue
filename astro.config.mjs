@@ -19,9 +19,6 @@ export default defineConfig({
     useCdn: false,
     apiVersion: "2024-08-13",
     studioBasePath: "/studio",
-    stega: {
-      studioUrl: "/studio"
-    }
   }), tailwind(), partytown(), react()],
-  output: "server"
+  output: "static",
 });
