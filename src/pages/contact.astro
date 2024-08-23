@@ -1,6 +1,8 @@
 ---
 import { loadQuery } from "../sanity/lib/load-query";
 import Layout from "../layouts/Layout.astro";
+import OurText from "../components/OurText.astro";
+import Button from "../components/Button.astro";
 
 interface ContactData {
     email: string;
@@ -16,28 +18,27 @@ const { email, instagram } = contactData;
 ---
 
 <Layout title="Contact Us">
-    <section class="bg-gray-100 p-8 md:flex md:items-center md:space-x-8">
+    <OurText title="Contact Us" />
+    <section class="md:flex md:items-center md:space-x-8 py-8">
         <div class="md:w-1/2 mb-8 md:mb-0">
-            <h1 class="text-4xl font-bold mb-6">Contact Us</h1>
-            <p class="text-lg mb-4">You can reach us at:</p>
             <p class="text-lg mb-4">
                 Email: <a
                     href={`mailto:${email}`}
-                    class="text-blue-600 hover:underline">{email}</a
+                    class="text-color hover:underline">{email}</a
                 >
             </p>
             <p class="text-lg mb-8">
                 Instagram: <a
                     href={`https://instagram.com/${instagram}`}
                     target="_blank"
-                    class="text-blue-600 hover:underline">@{instagram}</a
+                    class="text-color hover:underline">@{instagram}</a
                 >
             </p>
 
             <h2 class="text-2xl font-bold mb-4">Send Us a Message</h2>
             <form action="/send-email" method="POST" class="space-y-4">
                 <div>
-                    <label for="name" class="block text-lg font-medium"
+                    <label for="name" class="block text-base font-medium"
                         >Your Name</label
                     >
                     <input
@@ -45,11 +46,11 @@ const { email, instagram } = contactData;
                         id="name"
                         name="name"
                         required
-                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#f6615a]"
                     />
                 </div>
                 <div>
-                    <label for="email" class="block text-lg font-medium"
+                    <label for="email" class="block text-base font-medium"
                         >Your Email</label
                     >
                     <input
@@ -57,34 +58,25 @@ const { email, instagram } = contactData;
                         id="email"
                         name="email"
                         required
-                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#f6615a]"
                     />
                 </div>
                 <div>
-                    <label for="message" class="block text-lg font-medium"
+                    <label for="message" class="block text-base font-medium"
                         >Your Message</label
                     >
                     <textarea
                         id="message"
                         name="message"
                         required
-                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#f6615a]"
                     ></textarea>
                 </div>
-                <button
-                    type="submit"
-                    class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
-                >
-                    Send Message
-                </button>
+                <Button label="Send Message" type="submit" variant="primary" />
             </form>
         </div>
         <div class="md:w-1/2">
-            <img
-                src="/404.webp"
-                alt="Contact Us"
-                class="w-full h-auto rounded-lg shadow-lg"
-            />
+            <img src="/cat_vase.svg" alt="Contact Us" class="w-full h-auto" />
         </div>
     </section>
 </Layout>

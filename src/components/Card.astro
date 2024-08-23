@@ -7,7 +7,14 @@ interface Props {
 const { description, embedHtml } = Astro.props;
 ---
 
-<div class="card">
-    <h3>{description}</h3>
-    <div set:html={embedHtml} />
+<div class="bg-gray-50 rounded-md max-w-md mx-auto shadow-card">
+    <h3 class="text-lg font-semibold text-color m-2 text-center">
+        {description}
+    </h3>
+    <div class="embed-container">
+        <div
+            set:html={embedHtml}
+            class="w-full h-auto overflow-hidden border-t-2 border-color"
+        />
+    </div>
 </div>

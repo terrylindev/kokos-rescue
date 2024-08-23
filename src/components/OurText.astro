@@ -1,0 +1,29 @@
+---
+import { loadQuery } from "../sanity/lib/load-query";
+
+interface Props {
+    title: string;
+    className?: string;
+}
+
+interface OurTextData {
+    title: string;
+    content: string;
+}
+
+const { title, className = "" } = Astro.props;
+
+// Fetch our text data from Sanity
+const { data: ourTextData } = await loadQuery<OurTextData>({
+    query: `*[_type == "ourText" && title == "${title}"][0]{title, content}`,
+});
+
+const { content } = ourTextData;
+---
+
+<p
+    class={`text-center text-sm text-color font-semibold uppercase ${className}`}
+>
+    {title}
+</p>
+<p class="text-center text-2xl font-bold">{content}</p>

@@ -4,6 +4,7 @@ import { loadEnv } from "vite";
 import tailwind from "@astrojs/tailwind";
 import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
+
 const {
   PUBLIC_SANITY_PROJECT_ID,
   PUBLIC_SANITY_DATASET

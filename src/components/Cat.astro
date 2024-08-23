@@ -1,0 +1,42 @@
+---
+interface Props {
+    name: string;
+    age: string;
+    description: string;
+    photoUrl: string;
+    instagramLink: string;
+}
+
+const { name, age, description, photoUrl, instagramLink } = Astro.props;
+---
+
+<div class="rounded-md max-w-md mx-auto shadow-card overflow-hidden bg-gray-50">
+    <a href={instagramLink} target="_blank" class="block relative">
+        <img src={photoUrl} alt={name} class="w-full h-64 object-cover" />
+        <div
+            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300"
+        >
+            <span class="text-white text-lg font-semibold"
+                >View on Instagram</span
+            >
+        </div>
+    </a>
+    <div class="p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-color rounded-full p-2">
+                    <img
+                        src="/icons8-cat-64.webp"
+                        alt="cat icon"
+                        class="w-8 h-8"
+                    />
+                </div>
+                <h2 class="text-xl font-semibold text-gray-800">{name}</h2>
+            </div>
+            <p class="text-sm text-gray-500">{age} old</p>
+        </div>
+        <div class="text-gray-700 space-y-4">
+            {description.split("\n").map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+    </div>
+</div>

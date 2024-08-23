@@ -28,12 +28,12 @@ const { title, formUrl } = Astro.props;
             label="Start Now"
             href={formUrl}
             variant="primary"
-            size="large"
+            blank={true}
         />
         <div class="relative h-[800px] w-full mt-5 mb-8">
             <iframe
                 src={formUrl}
-                class="absolute top-0 left-0 w-full h-full border-none rounded-lg"
+                class="absolute top-0 left-0 w-full h-full border-none rounded-md"
                 allowfullscreen
             >
                 Loading…

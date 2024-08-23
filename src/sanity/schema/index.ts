@@ -7,7 +7,10 @@ import cat from "./cat";
 import donate from "./donate";
 import adoption from "./adoption";
 import googleForm from "./googleForm";
+import OurText from "./ourText";
+import foster from "./foster";
+import fosterReasons from "./fosterReasons";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [homeCard, heroText, about, contact, cat, donate, adoption, googleForm],
+  types: [homeCard, heroText, about, contact, cat, donate, adoption, googleForm, OurText, foster, fosterReasons],
 };

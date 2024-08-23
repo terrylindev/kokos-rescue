@@ -2,6 +2,8 @@
 import { loadQuery } from "../sanity/lib/load-query";
 import Layout from "../layouts/Layout.astro";
 import ApplicationCard from "../components/ApplicationCard.astro";
+import InfoCard from "../components/InfoCard.astro";
+import OurText from "../components/OurText.astro";
 
 interface AdoptionItem {
     title: string;
@@ -30,47 +32,48 @@ const { data: adoptionItem5 } = await loadQuery<AdoptionItem>({
 });
 
 const { data: formUrl } = await loadQuery<{ formUrl: string }>({
-    query: `*[_type == "googleForm"][0]{formUrl}`,
+    query: `*[_type == "googleForm" && title == "Adoption Form"][0]{formUrl}`,
 });
 ---
 
 <Layout title="Adoption Information">
-    <section class="bg-gray-100 p-8">
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold mb-4">{adoptionItem1.title}</h2>
-            <ul class="list-disc list-inside text-lg space-y-2">
-                {adoptionItem1.bulletPoints.map((point) => <li>{point}</li>)}
-            </ul>
-        </div>
+    <OurText title="Adoption Process" />
+    <div class="max-w-7xl mx-auto px-4 md:px-8 py-8">
+        <section
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 pb-8"
+        >
+            <InfoCard
+                icon="/icons8-requirement.webp"
+                title={adoptionItem1.title}
+                bulletPoints={adoptionItem1.bulletPoints}
+                className="shadow-orange"
+            />
+            <InfoCard
+                icon="/icons8-paper.webp"
+                title={adoptionItem2.title}
+                bulletPoints={adoptionItem2.bulletPoints}
+                className="shadow-blue"
+            />
+            <InfoCard
+                icon="/icons8-fee.webp"
+                title={adoptionItem3.title}
+                bulletPoints={adoptionItem3.bulletPoints}
+                className="shadow-yellow"
+            />
+            <InfoCard
+                icon="/icons8-drug.webp"
+                title={adoptionItem4.title}
+                bulletPoints={adoptionItem4.bulletPoints}
+                className="shadow-green"
+            />
+            <InfoCard
+                icon="/icons8-vaccine.webp"
+                title={adoptionItem5.title}
+                bulletPoints={adoptionItem5.bulletPoints}
+                className="shadow-purple"
+            />
+        </section>
 
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold mb-4">{adoptionItem2.title}</h2>
-            <ul class="list-disc list-inside text-lg space-y-2">
-                {adoptionItem2.bulletPoints.map((point) => <li>{point}</li>)}
-            </ul>
-        </div>
-
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold mb-4">{adoptionItem3.title}</h2>
-            <ul class="list-disc list-inside text-lg space-y-2">
-                {adoptionItem3.bulletPoints.map((point) => <li>{point}</li>)}
-            </ul>
-        </div>
-
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold mb-4">{adoptionItem4.title}</h2>
-            <ul class="list-disc list-inside text-lg space-y-2">
-                {adoptionItem4.bulletPoints.map((point) => <li>{point}</li>)}
-            </ul>
-        </div>
-
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold mb-4">{adoptionItem5.title}</h2>
-            <ul class="list-disc list-inside text-lg space-y-2">
-                {adoptionItem5.bulletPoints.map((point) => <li>{point}</li>)}
-            </ul>
-        </div>
-    </section>
-
-    <ApplicationCard title="Adoption" formUrl={formUrl.formUrl} />
+        <ApplicationCard title="Adoption" formUrl={formUrl.formUrl} />
+    </div>
 </Layout>

@@ -1,7 +1,35 @@
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #faf1ea;
-    color: #333;
+    color: #2f2d30;
     margin: 0;
     padding: 0;
   }
+
+.text-color {
+    color: #f6615a;
+}
+
+.text-color-light {
+    color: #faf1ea;
+}
+
+.bg-color {
+    background-color: #f6615a;
+}
+
+.bg-color-light {
+    background-color: #faf1ea;
+}
+
+.footer-bg-color {
+    background-color: #313134;
+}
+
+.shadow-card {
+    box-shadow: 6px 6px 0px rgba(245,97,88,255);
+}
+
+.border-color {
+    border-color: #f6615a;
+}

@@ -1,0 +1,77 @@
+---
+import { loadQuery } from "../sanity/lib/load-query";
+import Layout from "../layouts/Layout.astro";
+import ApplicationCard from "../components/ApplicationCard.astro";
+import InfoCard from "../components/InfoCard.astro";
+import OurText from "../components/OurText.astro";
+import NumberedCard from "../components/NumberedCard.astro";
+
+interface FosterItem {
+    title: string;
+    bulletPoints: string[];
+}
+
+interface FosterReasons {
+    number: number;
+    title: string;
+    content: string;
+}
+
+// Fetch specific Foster items by title
+const { data: fosterItem1 } = await loadQuery<FosterItem>({
+    query: `*[_type == "foster" && title == "Requirements"][0]{title, bulletPoints}`,
+});
+
+const { data: fosterItem2 } = await loadQuery<FosterItem>({
+    query: `*[_type == "foster" && title == "Foster Process"][0]{title, bulletPoints}`,
+});
+
+const { data: formUrl } = await loadQuery<{ formUrl: string }>({
+    query: `*[_type == "googleForm" && title == "Foster Form"][0]{formUrl}`,
+});
+
+const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
+    query: `*[_type == "fosterReasons"] | order(number asc)`,
+});
+---
+
+<Layout title="Foster Information">
+    <OurText title="New to Fostering?" />
+    <div class="max-w-7xl mx-auto px-4 md:px-8 py-8">
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {
+                fosterReasons.map((reason) => (
+                    <NumberedCard
+                        number={reason.number}
+                        title={reason.title}
+                        content={reason.content}
+                    />
+                ))
+            }
+        </section>
+
+        <h1 class="text-2xl font-bold text-center mt-8">
+            Please carefully read the following information before applying to
+            foster
+        </h1>
+
+        <section
+            class="grid grid-cols-1 sm:grid-cols-2 gap-6 py-8 justify-center mx-auto"
+        >
+            <InfoCard
+                icon="/icons8-requirement.webp"
+                title={fosterItem1.title}
+                bulletPoints={fosterItem1.bulletPoints}
+                className="shadow-orange"
+            />
+            <InfoCard
+                icon="/icons8-paper.webp"
+                title={fosterItem2.title}
+                bulletPoints={fosterItem2.bulletPoints}
+                className="shadow-blue"
+            />
+        </section>
+
+        <ApplicationCard title="Foster" formUrl={formUrl.formUrl} />
+    </div>
+</Layout>
