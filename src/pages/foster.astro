@@ -50,7 +50,7 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
             }
         </section>
 
-        <h1 class="text-2xl font-bold text-center mt-8">
+        <h1 class="text-xl md:text-2xl font-bold text-center mt-8">
             Please carefully read the following information before applying to
             foster
         </h1>
@@ -59,13 +59,13 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
             class="grid grid-cols-1 sm:grid-cols-2 gap-6 py-8 justify-center mx-auto"
         >
             <InfoCard
-                icon="/icons8-requirement.webp"
+                icon="/images/icons8-requirement.webp"
                 title={fosterItem1.title}
                 bulletPoints={fosterItem1.bulletPoints}
                 className="shadow-orange"
             />
             <InfoCard
-                icon="/icons8-paper.webp"
+                icon="/images/icons8-paper.webp"
                 title={fosterItem2.title}
                 bulletPoints={fosterItem2.bulletPoints}
                 className="shadow-blue"
