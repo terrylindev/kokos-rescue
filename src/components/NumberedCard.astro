@@ -1,18 +1,18 @@
 ---
 interface Props {
-    number: number;
-    title: string;
-    content: string;
+  number: number;
+  title: string;
+  content: string;
 }
 
 const { number, title, content } = Astro.props;
 ---
 
 <div
-    class="bg-gray-50 shadow-lg rounded-md p-4 md:p-6 flex flex-col items-center gap-2"
+  class="bg-gray-50 shadow-lg rounded-md p-4 md:p-6 flex flex-col items-center gap-2"
 >
-    <h1
-        class="text-2xl
+  <h1
+    class="text-2xl
     font-bold
     text-center
     bg-color
@@ -25,9 +25,15 @@ const { number, title, content } = Astro.props;
     items-center
     justify-center
     rounded-full"
-    >
-        {number}
-    </h1>
-    <h2 class="text-xl md:text-2xl font-bold text-center">{title}</h2>
-    <p class="text-base text-center text-color">{content}</p>
+  >
+    {number}
+  </h1>
+  <h2 class="text-xl md:text-2xl font-bold text-center">{title}</h2>
+  <p class="text-base text-center text-red-custom">{content}</p>
 </div>
+
+<style>
+  .text-red-custom {
+    color: #e31c3d;
+  }
+</style>
