@@ -6,45 +6,53 @@ import Cat from "../components/Cat.astro";
 import OurText from "../components/OurText.astro";
 
 interface Cat {
-    name: string;
-    age: string;
-    gender: string;
-    description: string;
-    photo: {
-        asset: {
-            _ref: string;
-        };
+  name: string;
+  age: string;
+  gender: string;
+  description: string;
+  photo: {
+    asset: {
+      _ref: string;
     };
-    instagramLink: string;
+  };
+  instagramLink: string;
 }
 
-// Fetch cats data from Sanity
-const { data: cats } = await loadQuery<Cat[]>({
+let cats: Cat[] = [];
+
+try {
+  const { data } = await loadQuery<Cat[]>({
     query: `*[_type == "cat"]{name, age, gender, description, photo, instagramLink}`,
-});
+  });
+
+  cats = data || [];
+} catch (error) {
+  console.error("Failed to load cats data:", error);
+}
 ---
 
 <Layout title="Our Cats">
-    <OurText title="Our Cats" />
-    <div class="max-w-7xl mx-auto px-4 md:px-8 py-8">
-        <section
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center justify-content-center"
-        >
-            {
-                cats.map((cat) => (
-                    <Cat
-                        name={cat.name}
-                        age={cat.age}
-                        gender={cat.gender}
-                        description={cat.description}
-                        photoUrl={urlForImage(cat.photo)
-                            .width(400)
-                            .height(300)
-                            .url()}
-                        instagramLink={cat.instagramLink}
-                    />
-                ))
-            }
-        </section>
-    </div>
+  <OurText title="Our Cats" />
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-8">
+    <section
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center justify-content-center"
+    >
+      {
+        cats.length > 0 ? (
+          cats.map((cat) => (
+            <Cat
+              name={cat.name}
+              age={cat.age}
+              gender={cat.gender}
+              description={cat.description}
+              photoUrl={urlForImage(cat.photo).width(400).height(300).url()}
+              instagramLink={cat.instagramLink}
+            />
+          ))
+        ) : (
+          <p>No cats available at the moment.</p>
+        )
+      }
+    </section>
+  </div>
 </Layout>
