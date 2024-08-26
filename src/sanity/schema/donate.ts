@@ -9,11 +9,13 @@ export default defineType({
             name: 'name',
             title: 'Method Name',
             type: 'string',
+            validation: Rule => Rule.required().error('Method Name is required')
         }),
         defineField({
             name: 'url',
             title: 'Donation URL',
             type: 'url',
+            validation: Rule => Rule.required().error('Donation URL is required')
         }),
     ],
 });

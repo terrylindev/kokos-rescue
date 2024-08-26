@@ -9,6 +9,7 @@ export default defineType({
             name: 'content',
             title: 'Content',
             type: 'text',
+            validation: Rule => Rule.required().error('Content is required')
         }),
     ],
 });

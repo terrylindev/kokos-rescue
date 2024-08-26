@@ -9,12 +9,14 @@ export default defineType({
             name: 'title',
             title: 'Title',
             type: 'string',
+            validation: Rule => Rule.required().error('Title is required'),
         }),
         defineField({
             name: 'bulletPoints',
             title: 'Bullet Points',
             type: 'array',
             of: [{ type: 'string' }],
+            validation: Rule => Rule.required().error('Bullet Points are required'),
         }),
     ],
 });
