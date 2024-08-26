@@ -3,6 +3,10 @@ import { loadQuery } from "../sanity/lib/load-query";
 import Layout from "../layouts/Layout.astro";
 import OurText from "../components/OurText.astro";
 import Button from "../components/Button.astro";
+import { loadEnv } from "vite";
+
+const env = loadEnv(import.meta.env.MODE, process.cwd(), "");
+const FORM_ACCESS_KEY = env.VITE_WEB3FORMS_ACCESS_KEY;
 
 interface ContactData {
   email: string;
@@ -35,7 +39,12 @@ const { email, instagram } = contactData;
       </p>
 
       <h2 class="text-2xl font-bold mb-4">Send Us a Message</h2>
-      <form action="/send-email" method="POST" class="space-y-4">
+      <form
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        class="space-y-4"
+      >
+        <input type="hidden" name="access_key" value=`${FORM_ACCESS_KEY}` />
         <div>
           <label for="name" class="block text-base font-medium">Your Name</label
           >
