@@ -18,6 +18,12 @@ export default defineType({
             validation: Rule => Rule.required().error('Age is required')
         }),
         defineField({
+            name: 'gender',
+            title: 'Gender',
+            type: 'string',
+            validation: Rule => Rule.required().error('Gender is required')
+        }),
+        defineField({
             name: 'description',
             title: 'Description',
             type: 'text',
