@@ -1,4 +1,4 @@
 user-agent: *
 Disallow: /studio/
 Allow: /
-Sitemap: https://kokosrescue.com/sitemap.xml
+Sitemap: https://kokosrescue.com/sitemap-index.xml
