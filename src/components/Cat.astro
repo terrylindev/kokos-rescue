@@ -2,12 +2,13 @@
 interface Props {
     name: string;
     age: string;
+    gender: string;
     description: string;
     photoUrl: string;
     instagramLink: string;
 }
 
-const { name, age, description, photoUrl, instagramLink } = Astro.props;
+const { name, age, gender, description, photoUrl, instagramLink } = Astro.props;
 ---
 
 <div class="rounded-md max-w-md mx-auto shadow-card overflow-hidden bg-gray-50">
@@ -31,12 +32,28 @@ const { name, age, description, photoUrl, instagramLink } = Astro.props;
                         class="w-8 h-8"
                     />
                 </div>
-                <h2 class="text-xl font-semibold text-gray-800">{name}</h2>
+                <div class="flex items-center space-x-1">
+                    <h2 class="text-xl font-semibold text-gray-800">{name}</h2>
+                    <img
+                        width="22"
+                        height="22"
+                        src=`/images/icons8-${gender}.webp`
+                        alt=`${gender}`
+                    />
+                </div>
             </div>
             <p class="text-sm text-gray-500">{age} old</p>
         </div>
         <div class="text-gray-700 space-y-4">
-            {description.split("\n").map((paragraph) => <p>{paragraph}</p>)}
+            {
+                description ? (
+                    description
+                        .split("\n")
+                        .map((paragraph) => <p>{paragraph}</p>)
+                ) : (
+                    <p>{name} is amazing!</p>
+                )
+            }
         </div>
     </div>
 </div>

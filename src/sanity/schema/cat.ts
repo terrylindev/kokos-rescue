@@ -21,13 +21,18 @@ export default defineType({
             name: 'gender',
             title: 'Gender',
             type: 'string',
+            options: {
+                list: [
+                    { title: 'Male', value: 'male' },
+                    { title: 'Female', value: 'female' },
+                ],
+            },
             validation: Rule => Rule.required().error('Gender is required')
         }),
         defineField({
             name: 'description',
             title: 'Description',
             type: 'text',
-            validation: Rule => Rule.required().error('Description is required')
         }),
         defineField({
             name: 'photo',

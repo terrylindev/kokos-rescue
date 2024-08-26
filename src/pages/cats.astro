@@ -8,6 +8,7 @@ import OurText from "../components/OurText.astro";
 interface Cat {
     name: string;
     age: string;
+    gender: string;
     description: string;
     photo: {
         asset: {
@@ -19,7 +20,7 @@ interface Cat {
 
 // Fetch cats data from Sanity
 const { data: cats } = await loadQuery<Cat[]>({
-    query: `*[_type == "cat"]{name, age, description, photo, instagramLink}`,
+    query: `*[_type == "cat"]{name, age, gender, description, photo, instagramLink}`,
 });
 ---
 
@@ -34,6 +35,7 @@ const { data: cats } = await loadQuery<Cat[]>({
                     <Cat
                         name={cat.name}
                         age={cat.age}
+                        gender={cat.gender}
                         description={cat.description}
                         photoUrl={urlForImage(cat.photo)
                             .width(400)
