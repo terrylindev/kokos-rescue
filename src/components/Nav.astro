@@ -1,65 +1,56 @@
 ---
 const currentPath = Astro.url.pathname;
+
+// Define navigation items for easier management
+const navItems = [
+  { path: "/", label: "Home" },
+  { path: "/about/", label: "About" },
+  { path: "/cats/", label: "Cats" },
+  { path: "/adopt/", label: "Adopt" },
+  { path: "/foster/", label: "Foster" },
+  { path: "/success-stories/", label: "Success Stories" },
+  { path: "/contact/", label: "Contact" },
+];
 ---
 
 <nav>
   <ul
-    class="flex flex-col md:flex-row md:space-x-4 text-base font-medium py-0 md:px-0"
+    class="flex flex-col md:flex-row md:items-center md:justify-center text-base font-medium py-0 md:px-0 gap-1 md:gap-2"
   >
-    <li>
-      <a
-        href="/"
-        class={`nav-link block ${currentPath === "/" ? "active" : ""}`}>Home</a
-      >
-    </li>
-    <li>
-      <a
-        href="/about/"
-        class={`nav-link block ${currentPath === "/about/" ? "active" : ""}`}
-        >About</a
-      >
-    </li>
-    <li>
-      <a
-        href="/cats/"
-        class={`nav-link block ${currentPath === "/cats/" ? "active" : ""}`}
-        >Cats</a
-      >
-    </li>
-    <li>
-      <a
-        href="/adopt/"
-        class={`nav-link block ${currentPath === "/adopt/" ? "active" : ""}`}
-        >Adopt</a
-      >
-    </li>
-    <li>
-      <a
-        href="/foster/"
-        class={`nav-link block ${currentPath === "/foster/" ? "active" : ""}`}
-        >Foster</a
-      >
-    </li>
-    <li>
-      <a
-        href="/contact/"
-        class={`nav-link block ${currentPath === "/contact/" ? "active" : ""}`}
-        >Contact</a
-      >
-    </li>
+    {
+      navItems.map((item) => (
+        <li class="nav-item flex">
+          <a
+            href={item.path}
+            class={`nav-link w-full ${currentPath === item.path ? "active" : ""}`}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
   </ul>
 </nav>
 
 <style>
+  .nav-item {
+    display: flex;
+    align-items: stretch;
+  }
+
   .nav-link {
     color: #333;
-    padding: 8px 16px;
+    padding: 8px 12px;
     border-radius: 3px;
     position: relative;
     text-align: center;
     transition:
       background-color 0.3s ease,
       color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
   }
 
   .nav-link:hover,
@@ -105,7 +96,7 @@ const currentPath = Astro.url.pathname;
   /* Medium and above screens */
   @media (min-width: 768px) {
     .nav-link {
-      padding: 8px 16px;
+      padding: 8px 12px;
     }
 
     .nav-link:hover,

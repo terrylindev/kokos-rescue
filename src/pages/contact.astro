@@ -22,68 +22,253 @@ const { email, instagram } = contactData;
 ---
 
 <Layout title="Contact Us">
-  <OurText title="Contact Us" />
-  <section class="md:flex md:items-center md:space-x-8 p-8">
-    <div class="md:w-1/2 mb-8 md:mb-0">
-      <p class="text-lg mb-4">
-        Email: <a href={`mailto:${email}`} class="text-color hover:underline"
-          >{email}</a
-        >
+  <!-- Hero Banner -->
+  <div class="bg-gradient-to-r from-purple-100 to-pink-100 py-16">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+        Contact Us
+      </h1>
+      <p class="text-xl max-w-3xl mx-auto mb-8 text-gray-700">
+        Have questions about adoption, fostering, or how you can help? We'd love
+        to hear from you!
       </p>
-      <p class="text-lg mb-8">
-        Instagram: <a
-          href={`https://instagram.com/${instagram}`}
-          target="_blank"
-          class="text-color hover:underline">@{instagram}</a
-        >
-      </p>
+    </div>
+  </div>
 
-      <h2 class="text-2xl font-bold mb-4">Send Us a Message</h2>
-      <form
-        action="https://api.web3forms.com/submit"
-        method="POST"
-        class="space-y-4"
-      >
-        <input type="hidden" name="access_key" value=`${FORM_ACCESS_KEY}` />
-        <div>
-          <label for="name" class="block text-base font-medium">Your Name</label
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+      <div class="md:flex">
+        <!-- Contact Info Section -->
+        <div class="md:w-1/3 bg-gradient-to-br from-red-50 to-orange-50 p-8">
+          <h2
+            class="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-red-300 pb-2"
           >
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#f6615a]"
-          />
+            Get In Touch
+          </h2>
+
+          <div class="space-y-6">
+            <div class="flex items-center">
+              <div class="bg-red-100 rounded-full p-3 mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-red-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Email</p>
+                <a
+                  href={`mailto:${email}`}
+                  class="text-lg font-medium text-red-500 hover:underline"
+                  >{email}</a
+                >
+              </div>
+            </div>
+
+            <div class="flex items-center">
+              <div class="bg-red-100 rounded-full p-3 mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-red-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Instagram</p>
+                <a
+                  href={`https://instagram.com/${instagram}`}
+                  target="_blank"
+                  class="text-lg font-medium text-red-500 hover:underline"
+                  >@{instagram}</a
+                >
+              </div>
+            </div>
+
+            <div class="pt-6">
+              <img
+                src="/images/cat_vase.svg"
+                alt="Contact Cat"
+                class="w-full max-w-xs mx-auto mt-8"
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          <label for="email" class="block text-base font-medium"
-            >Your Email</label
+
+        <!-- Contact Form Section -->
+        <div class="md:w-2/3 p-8">
+          <h2
+            class="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-gray-200 pb-2"
           >
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#f6615a]"
-          />
-        </div>
-        <div>
-          <label for="message" class="block text-base font-medium"
-            >Your Message</label
+            Send Us a Message
+          </h2>
+
+          <form
+            action="https://api.web3forms.com/submit"
+            method="POST"
+            class="space-y-6"
           >
-          <textarea
-            id="message"
-            name="message"
-            required
-            class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#f6615a]"
-          ></textarea>
+            <input type="hidden" name="access_key" value={FORM_ACCESS_KEY} />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label
+                  for="name"
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                  >Your Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 transition-colors"
+                  placeholder="John Doe"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                  >Your Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 transition-colors"
+                  placeholder="john@example.com"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="subject"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Subject</label
+              >
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 transition-colors"
+                placeholder="How can we help you?"
+              />
+            </div>
+
+            <div>
+              <label
+                for="message"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Your Message</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows="5"
+                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 transition-colors"
+                placeholder="Tell us more about your inquiry..."></textarea>
+            </div>
+
+            <div>
+              <Button
+                label="Send Message"
+                type="submit"
+                variant="primary"
+                size="large"
+              />
+            </div>
+          </form>
         </div>
-        <Button label="Send Message" type="submit" variant="primary" />
-      </form>
+      </div>
     </div>
-    <div class="md:w-1/2">
-      <img src="/images/cat_vase.svg" alt="Contact Us" class="w-full h-auto" />
+
+    <!-- FAQ Section -->
+    <div class="mt-16">
+      <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
+        Frequently Asked Questions
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold mb-2 text-gray-800">
+            When will I hear back from you?
+          </h3>
+          <p class="text-gray-700">
+            We aim to respond to all inquiries within 24-48 hours. For adoption
+            and foster applications, the process may take a bit longer.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold mb-2 text-gray-800">
+            How can I donate?
+          </h3>
+          <p class="text-gray-700">
+            Visit our <a href="/donate" class="text-red-500 hover:underline"
+              >Donate page</a
+            > for information on how to contribute financially or check out our supply
+            wishlist.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold mb-2 text-gray-800">Can I volunteer?</h3>
+          <p class="text-gray-700">
+            Yes! We're always looking for volunteers. Please send us a message
+            using the form above, and we'll get back to you with opportunities.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold mb-2 text-gray-800">
+            Where are you located?
+          </h3>
+          <p class="text-gray-700">
+            Koko's Rescue operates in NYC. While we don't have a physical
+            shelter location, we work through a network of foster homes.
+          </p>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
 </Layout>
+
+<style>
+  input,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Hover effect for cards */
+  .bg-white.p-6 {
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .bg-white.p-6:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+</style>

@@ -5,73 +5,295 @@ import ApplicationCard from "../components/ApplicationCard.astro";
 import InfoCard from "../components/InfoCard.astro";
 import OurText from "../components/OurText.astro";
 import NumberedCard from "../components/NumberedCard.astro";
+import Button from "../components/Button.astro";
 
 interface FosterItem {
-    title: string;
-    bulletPoints: string[];
+  title: string;
+  bulletPoints: string[];
 }
 
 interface FosterReasons {
-    number: number;
-    title: string;
-    content: string;
+  number: number;
+  title: string;
+  content: string;
 }
 
 // Fetch specific Foster items by title
 const { data: fosterItem1 } = await loadQuery<FosterItem>({
-    query: `*[_type == "foster" && title == "Requirements"][0]{title, bulletPoints}`,
+  query: `*[_type == "foster" && title == "Requirements"][0]{title, bulletPoints}`,
 });
 
 const { data: fosterItem2 } = await loadQuery<FosterItem>({
-    query: `*[_type == "foster" && title == "Foster Process"][0]{title, bulletPoints}`,
+  query: `*[_type == "foster" && title == "Foster Process"][0]{title, bulletPoints}`,
 });
 
 const { data: formUrl } = await loadQuery<{ formUrl: string }>({
-    query: `*[_type == "googleForm" && title == "Foster Form"][0]{formUrl}`,
+  query: `*[_type == "googleForm" && title == "Foster Form"][0]{formUrl}`,
 });
 
 const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
-    query: `*[_type == "fosterReasons"] | order(number asc)`,
+  query: `*[_type == "fosterReasons"] | order(number asc)`,
 });
 ---
 
 <Layout title="Foster Information">
-    <OurText title="New to Fostering?" />
-    <div class="max-w-7xl mx-auto px-4 md:px-8 py-8">
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {
-                fosterReasons.map((reason) => (
-                    <NumberedCard
-                        number={reason.number}
-                        title={reason.title}
-                        content={reason.content}
-                    />
-                ))
-            }
-        </section>
-
-        <h1 class="text-xl md:text-2xl font-bold text-center mt-8">
-            Please carefully read the following information before applying to
-            foster
-        </h1>
-
-        <section
-            class="grid grid-cols-1 sm:grid-cols-2 gap-6 py-8 justify-center mx-auto"
-        >
-            <InfoCard
-                icon="/images/icons8-requirement.webp"
-                title={fosterItem1.title}
-                bulletPoints={fosterItem1.bulletPoints}
-                className="shadow-orange"
-            />
-            <InfoCard
-                icon="/images/icons8-paper.webp"
-                title={fosterItem2.title}
-                bulletPoints={fosterItem2.bulletPoints}
-                className="shadow-blue"
-            />
-        </section>
-
-        <ApplicationCard title="Foster" formUrl={formUrl.formUrl} />
+  <!-- Hero Section -->
+  <div class="bg-gradient-to-r from-blue-100 to-purple-100 py-16">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+        Become a Foster
+      </h1>
+      <p class="text-xl max-w-3xl mx-auto mb-8 text-gray-700">
+        Fostering saves lives. By opening your home temporarily, you help us
+        rescue more cats and prepare them for their forever homes.
+      </p>
+      <div class="flex justify-center gap-4 flex-wrap">
+        <Button
+          label="Learn More"
+          href="#foster-reasons"
+          variant="primary"
+          size="large"
+        />
+        <Button
+          label="Apply Now"
+          href="#application-form"
+          variant="secondary"
+          size="large"
+        />
+      </div>
     </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+    <!-- Introduction Section -->
+    <div class="bg-white rounded-xl shadow-md p-8 mb-12">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="md:w-1/2">
+          <h2 class="text-3xl font-bold mb-4 text-gray-800">
+            What is Fostering?
+          </h2>
+          <p class="text-gray-700 mb-4">
+            Fostering means providing temporary care for a cat in your home
+            until they find their permanent family. As a foster parent, you'll
+            help cats adjust to home life, receive necessary medical care, and
+            prepare for adoption.
+          </p>
+          <p class="text-gray-700">
+            Koko's Rescue provides all necessary supplies and covers medical
+            expenses. You provide the love, care, and socialization these cats
+            need to thrive.
+          </p>
+        </div>
+        <div class="md:w-1/2">
+          <img
+            src="/images/fish-bowl.svg"
+            alt="Cat Fostering"
+            class="w-full max-w-md mx-auto rounded-lg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Reasons to Foster Section -->
+    <div id="foster-reasons" class="mb-16">
+      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+        Why Foster with Us?
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {
+          fosterReasons.map((reason) => (
+            <NumberedCard
+              number={reason.number}
+              title={reason.title}
+              content={reason.content}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Success Stories Link Section -->
+    <div class="bg-white rounded-xl shadow-md p-8 mb-16 text-center">
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">
+        Foster Success Stories
+      </h2>
+      <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
+        Read inspiring stories from our foster parents and see how they've
+        helped transform the lives of cats in our care.
+      </p>
+      <Button
+        label="Read Success Stories"
+        href="/success-stories"
+        variant="primary"
+        size="medium"
+      />
+    </div>
+
+    <!-- Requirements and Process Section -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+        Foster Information
+      </h2>
+      <p class="text-center text-lg mb-8 text-gray-700">
+        Please carefully read the following information before applying to
+        foster:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <InfoCard
+          icon="/images/icons8-requirement.webp"
+          title={fosterItem1.title}
+          bulletPoints={fosterItem1.bulletPoints}
+          className="shadow-orange transform transition-transform hover:scale-105"
+        />
+        <InfoCard
+          icon="/images/icons8-paper.webp"
+          title={fosterItem2.title}
+          bulletPoints={fosterItem2.bulletPoints}
+          className="shadow-blue transform transition-transform hover:scale-105"
+        />
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="bg-white rounded-xl shadow-md p-8 mb-16">
+      <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
+        Frequently Asked Questions
+      </h2>
+
+      <div class="space-y-4 max-w-4xl mx-auto">
+        <div class="border-b border-gray-200 pb-4">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">
+            How long do cats typically stay in foster care?
+          </h3>
+          <p class="text-gray-700">
+            Foster periods typically range from 2-8 weeks, depending on the
+            cat's needs and adoption timeline. We'll discuss the expected
+            timeframe when matching you with a foster cat.
+          </p>
+        </div>
+
+        <div class="border-b border-gray-200 pb-4">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">
+            What if I already have pets?
+          </h3>
+          <p class="text-gray-700">
+            Many of our foster parents have resident pets. We'll work with you
+            to find a foster cat that's compatible with your current pets, and
+            provide guidance on safe introductions.
+          </p>
+        </div>
+
+        <div class="border-b border-gray-200 pb-4">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">
+            What supplies do I need?
+          </h3>
+          <p class="text-gray-700">
+            Koko's Rescue provides all necessary supplies: food, litter, litter
+            box, toys, and bedding. We also cover all medical expenses. You just
+            provide the space and love!
+          </p>
+        </div>
+
+        <div class="pb-4">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">
+            What if I get attached to my foster cat?
+          </h3>
+          <p class="text-gray-700">
+            Foster fails happen! If you fall in love with your foster cat, you
+            can apply to adopt them. Many of our foster parents have ended up
+            adopting one of their fosters, and it's a beautiful outcome.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div
+      class="bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl p-8 mb-16 text-center"
+    >
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">
+        Ready to Change Lives?
+      </h2>
+      <p class="text-xl mb-8 max-w-3xl mx-auto text-gray-700">
+        Every cat in foster care means another cat we can rescue. Join our
+        foster team today and make a difference!
+      </p>
+      <Button
+        label="Become a Foster"
+        href="#application-form"
+        variant="primary"
+        size="large"
+      />
+    </div>
+
+    <!-- Application Form Section -->
+    <div id="application-form">
+      <ApplicationCard
+        title="Foster"
+        formUrl={formUrl?.formUrl || "https://tally.so/r/woJQD2"}
+      />
+    </div>
+  </div>
 </Layout>
+
+<style>
+  .shadow-orange {
+    box-shadow: 0 4px 0 0 rgba(237, 137, 54, 0.5);
+  }
+  .shadow-blue {
+    box-shadow: 0 4px 0 0 rgba(66, 153, 225, 0.5);
+  }
+  .shadow-yellow {
+    box-shadow: 0 4px 0 0 rgba(236, 201, 75, 0.5);
+  }
+
+  /* Button hover effect */
+  button:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Card hover effect */
+  .hover\:scale-105:hover {
+    transform: translateY(-10px);
+  }
+
+  .bg-gradient-to-r {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-gradient-to-r::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/images/paw-pattern.jpg");
+    background-size: 200px;
+    opacity: 0.05;
+    z-index: 0;
+  }
+
+  .bg-gradient-to-r > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Enhanced numbered cards */
+  :global(.bg-color) {
+    background-color: #f6615a;
+  }
+
+  /* Add hover effect to numbered cards */
+  :global(div:has(> h1.bg-color)) {
+    transition: transform 0.3s ease;
+  }
+</style>

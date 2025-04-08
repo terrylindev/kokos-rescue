@@ -1,0 +1,314 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+import { loadQuery } from "../sanity/lib/load-query";
+import { urlForImage } from "../sanity/lib/urlForImage";
+
+// Interface for success stories from Sanity
+interface SuccessStory {
+  name: string;
+  time: string;
+  initial: string;
+  color: string;
+  type: string;
+  story: string;
+  photo: {
+    asset: {
+      _ref: string;
+    };
+  };
+}
+
+// Fetch adoption stories from Sanity
+const { data: adoptionStories } = await loadQuery<SuccessStory[]>({
+  query: `*[_type == "successStory" && type == "adoption"]{
+    name,
+    time,
+    initial,
+    color,
+    type,
+    story,
+    photo
+  }`,
+});
+
+// Fetch foster stories from Sanity
+const { data: fosterStories } = await loadQuery<SuccessStory[]>({
+  query: `*[_type == "successStory" && type == "foster"]{
+    name,
+    time,
+    initial,
+    color,
+    type,
+    story,
+    photo
+  }`,
+});
+
+// Fallback data in case no stories exist in Sanity yet
+const fallbackAdoptionStories = [
+  {
+    name: "Jessica & Whiskers",
+    time: "6 months ago",
+    initial: "J",
+    color: "red",
+    type: "adoption",
+    story:
+      "The adoption process was smooth and the team at Koko's Rescue was incredibly helpful. Whiskers has brought so much joy to our family!",
+    photo: null,
+  },
+  {
+    name: "Michael & Luna",
+    time: "1 year ago",
+    initial: "M",
+    color: "blue",
+    type: "adoption",
+    story:
+      "Luna was shy at first, but with patience and love, she's become the most affectionate cat. Thank you Koko's Rescue for bringing us together!",
+    photo: null,
+  },
+  {
+    name: "Sarah & Oliver",
+    time: "3 months ago",
+    initial: "S",
+    color: "green",
+    type: "adoption",
+    story:
+      "Oliver has the best personality! The rescue gave us detailed information about his preferences and needs, making the transition to our home so easy.",
+    photo: null,
+  },
+];
+
+const fallbackFosterStories = [
+  {
+    name: "Alyssa & Luna",
+    time: "Foster parent for 2+ years",
+    initial: "A",
+    color: "purple",
+    type: "foster",
+    story:
+      "Fostering has been one of the most rewarding experiences of my life. Seeing cats blossom from scared and shy to confident and loving is incredible. Yes, it's hard to say goodbye, but knowing they're going to loving homes makes it all worthwhile.",
+    photo: null,
+  },
+  {
+    name: "David & Mittens",
+    time: "Foster parent for 1 year",
+    initial: "D",
+    color: "yellow",
+    type: "foster",
+    story:
+      "I started fostering during the pandemic and haven't looked back. Mittens was my first foster - she was so timid, but by the end of our time together, she was purring on my lap. Her new family sends me updates, which makes the whole experience even more special.",
+    photo: null,
+  },
+  {
+    name: "Emily & Shadow",
+    time: "Foster parent for 6 months",
+    initial: "E",
+    color: "pink",
+    type: "foster",
+    story:
+      "Shadow came to me underweight and scared of humans. It took weeks of patience, but eventually he started to trust me. When he found his forever home, I cried tears of joy. There's nothing like seeing a cat transform before your eyes.",
+    photo: null,
+  },
+];
+
+// Use Sanity data if available, otherwise use fallback data
+const displayedAdoptionStories =
+  adoptionStories?.length > 0 ? adoptionStories : fallbackAdoptionStories;
+const displayedFosterStories =
+  fosterStories?.length > 0 ? fosterStories : fallbackFosterStories;
+---
+
+<Layout title="Success Stories">
+  <!-- Hero Section -->
+  <div class="bg-gradient-to-r from-orange-100 to-pink-100 py-16">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+        Success Stories
+      </h1>
+      <p class="text-xl max-w-3xl mx-auto mb-8 text-gray-700">
+        Every cat has a story. Here are some of the happy endings our adopters
+        and fosters have helped create.
+      </p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+    <!-- Adoption Success Stories -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+        Adoption Success Stories
+      </h2>
+      <p class="text-center text-lg mb-8 text-gray-700">
+        These cats found their forever homes thanks to our wonderful adopters.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          displayedAdoptionStories.map((story) => (
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+              <div class="h-48 bg-gray-200 flex items-center justify-center">
+                {story.photo ? (
+                  <img
+                    src={urlForImage(story.photo).width(400).height(300).url()}
+                    alt={story.name}
+                    class="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img
+                    src="/images/cat-footer.svg"
+                    alt={story.name}
+                    class="h-32"
+                  />
+                )}
+              </div>
+              <div class="p-6">
+                <div class="flex items-center mb-4">
+                  <div
+                    class={`w-12 h-12 bg-${story.color}-100 rounded-full flex items-center justify-center mr-4`}
+                  >
+                    <span class={`text-${story.color}-500 text-xl font-bold`}>
+                      {story.initial}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800">{story.name}</h3>
+                    <p class="text-gray-600 text-sm">
+                      {story.type === "adoption" ? "Adopted " : ""}
+                      {story.time}
+                    </p>
+                  </div>
+                </div>
+                <p class="text-gray-700 italic">"{story.story}"</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="text-center mt-8">
+        <Button
+          label="Adopt Your Own Cat"
+          href="/adopt"
+          variant="primary"
+          size="large"
+        />
+      </div>
+    </section>
+
+    <!-- Foster Success Stories -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+        Foster Success Stories
+      </h2>
+      <p class="text-center text-lg mb-8 text-gray-700">
+        Our foster parents make rescue possible. Here are their experiences.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {
+          displayedFosterStories.map((story) => (
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+              <div class="h-48 bg-gray-200 flex items-center justify-center">
+                {story.photo ? (
+                  <img
+                    src={urlForImage(story.photo).width(400).height(300).url()}
+                    alt={story.name}
+                    class="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img
+                    src="/images/cat-footer.svg"
+                    alt={story.name}
+                    class="h-32"
+                  />
+                )}
+              </div>
+              <div class="p-6">
+                <div class="flex items-center mb-4">
+                  <div
+                    class={`w-12 h-12 bg-${story.color}-100 rounded-full flex items-center justify-center mr-4`}
+                  >
+                    <span class={`text-${story.color}-500 text-xl font-bold`}>
+                      {story.initial}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800">
+                      {story.name.split(" & ")[0]}
+                    </h3>
+                    <p class="text-gray-600 text-sm">{story.time}</p>
+                  </div>
+                </div>
+                <p class="text-gray-700 italic">"{story.story}"</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="text-center mt-8">
+        <Button
+          label="Become a Foster"
+          href="/foster"
+          variant="primary"
+          size="large"
+        />
+      </div>
+    </section>
+
+    <!-- Share Your Story Section -->
+    <section
+      class="bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl p-8 text-center"
+    >
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">Share Your Story</h2>
+      <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
+        Have you adopted or fostered a cat from Koko's Rescue? We'd love to hear
+        about your experience and possibly feature your story on our website!
+      </p>
+      <Button
+        label="Contact Us"
+        href="/contact"
+        variant="secondary"
+        size="large"
+      />
+    </section>
+  </div>
+</Layout>
+
+<style>
+  /* Card hover effects */
+  .bg-white.rounded-xl {
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .bg-white.rounded-xl:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .bg-gradient-to-r {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-gradient-to-r::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/images/paw-pattern.jpg");
+    background-size: 200px;
+    opacity: 0.05;
+    z-index: 0;
+  }
+
+  .bg-gradient-to-r > * {
+    position: relative;
+    z-index: 1;
+  }
+</style>

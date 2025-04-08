@@ -4,32 +4,32 @@ import { loadQuery } from "../sanity/lib/load-query";
 import HeroText from "../components/HeroText.astro";
 
 interface Card {
-    description: string;
-    instagramEmbed: string;
+  description: string;
+  instagramEmbed: string;
 }
 
 const { data: cards } = await loadQuery<Card[]>({
-    query: `*[_type == "card"]{description, instagramEmbed}`,
+  query: `*[_type == "card"]{description, instagramEmbed}`,
 });
 
 const card = cards[0];
 ---
 
 <section>
-    <div class="flex flex-col md:flex-row items-center">
-        <div class="md:w-1/2 mb-8 md:mb-0">
-            <HeroText />
-        </div>
-        <!-- <img src="/images/hero-image.jpg" alt="Hero Image" class="md:w-1/2" /> -->
-        <div class="md:w-1/2 flex flex-col space-y-4">
-            {
-                card && (
-                    <Card
-                        description={card.description}
-                        embedHtml={card.instagramEmbed}
-                    />
-                )
-            }
-        </div>
+  <div class="flex flex-col md:flex-row items-center">
+    <div class="md:w-1/2 mb-8 md:mb-0">
+      <HeroText />
     </div>
+    <!-- <img src="/images/hero-image.jpg" alt="Hero Image" class="md:w-1/2" /> -->
+    <div class="md:w-1/2 flex flex-col space-y-4">
+      {
+        card && (
+          <Card
+            description={card.description}
+            embedHtml={card.instagramEmbed}
+          />
+        )
+      }
+    </div>
+  </div>
 </section>

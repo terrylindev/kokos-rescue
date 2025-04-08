@@ -12,17 +12,198 @@ const { data: contactData } = await loadQuery<ContactData>({
 });
 
 const { email, instagram } = contactData;
+
+// Get current year for copyright
+const currentYear = new Date().getFullYear();
 ---
 
-<footer
-  class="text-center border-t-2 border-gray-300 py-3 px-8 flex justify-between items-center footer-bg-color text-white"
->
-  <img src="/images/cat-footer.svg" alt="Koko's Rescue Logo" class="h-12" />
-  <div class="text-center">
-    <p class="text-sm">{email} | New York City</p>
-    <p class="text-sm">&copy; 2024 Koko's Rescue. All rights reserved.</p>
+<footer class="border-t-2 border-gray-300 bg-[#f6615a] text-white">
+  <!-- Main Footer Content -->
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Logo and Organization Info -->
+      <div class="flex flex-col items-center sm:items-start">
+        <img
+          src="/images/cat-footer.svg"
+          alt="Koko's Rescue Logo"
+          class="h-16 mb-4"
+        />
+        <h3 class="text-xl font-bold mb-2">Koko's Rescue</h3>
+        <p class="text-sm opacity-90 mb-2">Saving one cat at a time</p>
+        <p class="text-sm opacity-90">New York City</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-lg font-bold mb-4 border-b border-white pb-2">
+          Quick Links
+        </h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="/cats"
+              class="text-sm hover:underline transition-colors hover:text-gray-200"
+              >Available Cats</a
+            >
+          </li>
+          <li>
+            <a
+              href="/adopt"
+              class="text-sm hover:underline transition-colors hover:text-gray-200"
+              >Adoption Process</a
+            >
+          </li>
+          <li>
+            <a
+              href="/foster"
+              class="text-sm hover:underline transition-colors hover:text-gray-200"
+              >Become a Foster</a
+            >
+          </li>
+          <li>
+            <a
+              href="/success-stories"
+              class="text-sm hover:underline transition-colors hover:text-gray-200"
+              >Success Stories</a
+            >
+          </li>
+          <li>
+            <a
+              href="/donate"
+              class="text-sm hover:underline transition-colors hover:text-gray-200"
+              >Donate</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Information -->
+      <div>
+        <h3 class="text-lg font-bold mb-4 border-b border-white pb-2">
+          Contact Us
+        </h3>
+        <ul class="space-y-2">
+          <li class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+            <a href={`mailto:${email}`} class="text-sm hover:underline"
+              >{email}</a
+            >
+          </li>
+          <li class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            <a
+              href={`https://instagram.com/${instagram}`}
+              target="_blank"
+              class="text-sm hover:underline">Instagram: @{instagram}</a
+            >
+          </li>
+          <li class="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+              ></path>
+            </svg>
+            <a href="/contact" class="text-sm hover:underline"
+              >Send us a message</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Newsletter Signup -->
+      <div>
+        <h3 class="text-lg font-bold mb-4 border-b border-white pb-2">
+          Stay Updated
+        </h3>
+        <p class="text-sm mb-3">
+          Follow us on social media for the latest updates on available cats and
+          rescue efforts.
+        </p>
+        <a
+          href={`https://instagram.com/${instagram}`}
+          target="_blank"
+          class="inline-flex items-center justify-center bg-white text-[#f6615a] px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors"
+        >
+          <img
+            src="/images/icons8-instagram.svg"
+            alt="Instagram"
+            class="h-6 w-6 mr-2"
+          />
+          Follow on Instagram
+        </a>
+      </div>
+    </div>
   </div>
-  <a href={`https://instagram.com/${instagram}`} target="_blank">
-    <img src="/images/icons8-instagram.svg" alt="Instagram" class="h-14" />
-  </a>
+
+  <!-- Copyright Section -->
+  <div class="bg-[#e2564f] py-4">
+    <div
+      class="max-w-7xl mx-auto px-4 md:px-8 flex flex-col sm:flex-row justify-between items-center"
+    >
+      <p class="text-sm opacity-90 mb-2 sm:mb-0">
+        &copy; {currentYear} Koko's Rescue. All rights reserved.
+      </p>
+      <div class="flex space-x-4">
+        <a href="/about" class="text-xs hover:underline">About Us</a>
+        <a href="/contact" class="text-xs hover:underline">Contact</a>
+        <a href="/donate" class="text-xs hover:underline">Support Our Mission</a
+        >
+      </div>
+    </div>
+  </div>
 </footer>
+
+<style>
+  footer {
+    position: relative;
+  }
+
+  footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(246, 97, 90, 0.9),
+      rgba(246, 97, 90, 1)
+    );
+    z-index: -1;
+  }
+</style>

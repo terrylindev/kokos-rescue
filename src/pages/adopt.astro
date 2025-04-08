@@ -4,81 +4,273 @@ import Layout from "../layouts/Layout.astro";
 import ApplicationCard from "../components/ApplicationCard.astro";
 import InfoCard from "../components/InfoCard.astro";
 import OurText from "../components/OurText.astro";
+import Button from "../components/Button.astro";
 
 interface AdoptionItem {
-    title: string;
-    bulletPoints: string[];
+  title: string;
+  bulletPoints: string[];
 }
 
 // Fetch specific adoption items by title
 const { data: adoptionItem1 } = await loadQuery<AdoptionItem>({
-    query: `*[_type == "adoption" && title == "Requirements"][0]{title, bulletPoints}`,
+  query: `*[_type == "adoption" && title == "Requirements"][0]{title, bulletPoints}`,
 });
 
 const { data: adoptionItem2 } = await loadQuery<AdoptionItem>({
-    query: `*[_type == "adoption" && title == "Adoption Process"][0]{title, bulletPoints}`,
+  query: `*[_type == "adoption" && title == "Adoption Process"][0]{title, bulletPoints}`,
 });
 
 const { data: adoptionItem3 } = await loadQuery<AdoptionItem>({
-    query: `*[_type == "adoption" && title == "Adoption Fees"][0]{title, bulletPoints}`,
+  query: `*[_type == "adoption" && title == "Adoption Fees"][0]{title, bulletPoints}`,
 });
 
 const { data: adoptionItem4 } = await loadQuery<AdoptionItem>({
-    query: `*[_type == "adoption" && title == "Dewormers and preventatives"][0]{title, bulletPoints}`,
+  query: `*[_type == "adoption" && title == "Dewormers and preventatives"][0]{title, bulletPoints}`,
 });
 
 const { data: adoptionItem5 } = await loadQuery<AdoptionItem>({
-    query: `*[_type == "adoption" && title == "Tests, vaccines, surgery"][0]{title, bulletPoints}`,
+  query: `*[_type == "adoption" && title == "Tests, vaccines, surgery"][0]{title, bulletPoints}`,
 });
 
 const { data: formUrl } = await loadQuery<{ formUrl: string }>({
-    query: `*[_type == "googleForm" && title == "Adoption Form"][0]{formUrl}`,
+  query: `*[_type == "googleForm" && title == "Adoption Form"][0]{formUrl}`,
 });
 ---
 
 <Layout title="Adoption Information">
-    <OurText title="Adoption Process" />
-    <div class="max-w-7xl mx-auto px-4 md:px-8 py-8">
-        <section
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8"
-        >
-            <InfoCard
-                icon="/images/icons8-requirement.webp"
-                title={adoptionItem1.title}
-                bulletPoints={adoptionItem1.bulletPoints}
-                className="shadow-orange"
-            />
-            <InfoCard
-                icon="/images/icons8-paper.webp"
-                title={adoptionItem2.title}
-                bulletPoints={adoptionItem2.bulletPoints}
-                className="shadow-blue"
-            />
-            <InfoCard
-                icon="/images/icons8-fee.webp"
-                title={adoptionItem3.title}
-                bulletPoints={adoptionItem3.bulletPoints}
-                className="shadow-yellow"
-            />
-        </section>
-        <h1 class="text-xl md:text-2xl font-bold text-center pb-8">
-            Your cat will get the following medical
-        </h1>
-        <section class="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-8">
-            <InfoCard
-                icon="/images/icons8-drug.webp"
-                title={adoptionItem4.title}
-                bulletPoints={adoptionItem4.bulletPoints}
-                className="shadow-green"
-            />
-            <InfoCard
-                icon="/images/icons8-vaccine.webp"
-                title={adoptionItem5.title}
-                bulletPoints={adoptionItem5.bulletPoints}
-                className="shadow-purple"
-            />
-        </section>
-
-        <ApplicationCard title="Adoption" formUrl={formUrl.formUrl} />
+  <!-- Hero Section -->
+  <div class="bg-gradient-to-r from-red-100 to-orange-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+        Adopt a New Family Member
+      </h1>
+      <p class="text-xl max-w-3xl mx-auto mb-8 text-gray-700">
+        Bringing a cat into your home is a rewarding experience that changes
+        lives - yours and theirs.
+      </p>
+      <div class="flex justify-center gap-4 flex-wrap">
+        <Button
+          label="View Available Cats"
+          href="/cats"
+          variant="primary"
+          size="large"
+        />
+        <Button
+          label="Start Application"
+          href="#application-form"
+          variant="secondary"
+          size="large"
+        />
+      </div>
     </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+    <!-- Introduction Section -->
+    <div class="bg-white rounded-xl shadow-md p-8 mb-12">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="md:w-1/2">
+          <h2 class="text-3xl font-bold mb-4 text-gray-800">Why Adopt?</h2>
+          <p class="text-gray-700 mb-4">
+            When you adopt a cat from Koko's Rescue, you're giving a second
+            chance to a cat in need. Our cats have been rescued, rehabilitated,
+            and are now ready for their forever homes.
+          </p>
+          <p class="text-gray-700">
+            Each adoption helps us continue our mission of rescuing more cats
+            and providing them with the care they need until they find loving
+            homes.
+          </p>
+        </div>
+        <div class="md:w-1/2">
+          <img
+            src="/images/cat-family-bro.svg"
+            alt="Cat Adoption"
+            class="w-full max-w-md mx-auto rounded-lg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Process Steps Section -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+        Adoption Process
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <InfoCard
+          icon="/images/icons8-requirement.webp"
+          title={adoptionItem1.title}
+          bulletPoints={adoptionItem1.bulletPoints}
+          className="shadow-orange transform transition-transform hover:scale-105"
+        />
+        <InfoCard
+          icon="/images/icons8-paper.webp"
+          title={adoptionItem2.title}
+          bulletPoints={adoptionItem2.bulletPoints}
+          className="shadow-blue transform transition-transform hover:scale-105"
+        />
+        <InfoCard
+          icon="/images/icons8-fee.webp"
+          title={adoptionItem3.title}
+          bulletPoints={adoptionItem3.bulletPoints}
+          className="shadow-yellow transform transition-transform hover:scale-105"
+        />
+      </div>
+    </div>
+
+    <!-- Medical Care Section -->
+    <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-8 mb-16">
+      <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
+        Complete Medical Care
+      </h2>
+      <p class="text-center text-lg mb-8 text-gray-700">
+        Every cat adopted from Koko's Rescue receives comprehensive medical
+        care:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div
+          class="bg-white rounded-xl p-6 shadow-md transform transition-transform hover:scale-105"
+        >
+          <div class="flex items-center mb-4">
+            <img
+              src="/images/icons8-drug.webp"
+              alt="Preventatives"
+              class="h-12 w-12 mr-4"
+            />
+            <h3 class="text-xl font-bold text-gray-800">
+              {adoptionItem4.title}
+            </h3>
+          </div>
+          <ul class="list-disc list-inside text-gray-700 space-y-2">
+            {adoptionItem4.bulletPoints.map((point) => <li>{point}</li>)}
+          </ul>
+        </div>
+
+        <div
+          class="bg-white rounded-xl p-6 shadow-md transform transition-transform hover:scale-105"
+        >
+          <div class="flex items-center mb-4">
+            <img
+              src="/images/icons8-vaccine.webp"
+              alt="Vaccines"
+              class="h-12 w-12 mr-4"
+            />
+            <h3 class="text-xl font-bold text-gray-800">
+              {adoptionItem5.title}
+            </h3>
+          </div>
+          <ul class="list-disc list-inside text-gray-700 space-y-2">
+            {adoptionItem5.bulletPoints.map((point) => <li>{point}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Stories Link Section -->
+    <div class="bg-white rounded-xl shadow-md p-8 mb-16 text-center">
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">
+        Adoption Success Stories
+      </h2>
+      <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
+        Read heartwarming stories from families who have adopted from Koko's
+        Rescue and how these cats have changed their lives for the better.
+      </p>
+      <Button
+        label="Read Success Stories"
+        href="/success-stories"
+        variant="primary"
+        size="medium"
+      />
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="bg-white rounded-xl shadow-md p-8 mb-16">
+      <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
+        Frequently Asked Questions
+      </h2>
+
+      <div class="space-y-4 max-w-4xl mx-auto">
+        <div class="border-b border-gray-200 pb-4">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">
+            How long does the adoption process take?
+          </h3>
+          <p class="text-gray-700">
+            The adoption process typically takes 1-2 weeks from application to
+            bringing your new cat home. This includes application review, home
+            check, and preparing for your new family member.
+          </p>
+        </div>
+
+        <div class="border-b border-gray-200 pb-4">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">
+            What if the cat I adopt isn't a good fit?
+          </h3>
+          <p class="text-gray-700">
+            We have a 2-week adjustment period. If things aren't working out,
+            we'll work with you to find a solution, which may include taking the
+            cat back into our care.
+          </p>
+        </div>
+
+        <div class="border-b border-gray-200 pb-4">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">
+            Do you adopt to families outside of NYC?
+          </h3>
+          <p class="text-gray-700">
+            Yes, we consider adoptions within a reasonable distance of NYC,
+            generally within a 50-mile radius, to ensure we can conduct home
+            checks and provide post-adoption support.
+          </p>
+        </div>
+
+        <div class="pb-4">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">
+            Can I meet the cat before adopting?
+          </h3>
+          <p class="text-gray-700">
+            Absolutely! We encourage meet-and-greets before finalizing any
+            adoption. This helps ensure a good match between you and your
+            potential new family member.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Application Form Section with ID for scroll target -->
+    <div id="application-form">
+      <ApplicationCard title="Adoption" formUrl={formUrl.formUrl} />
+    </div>
+  </div>
 </Layout>
+
+<style>
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .bg-gradient-to-r {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-gradient-to-r::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/images/paw-pattern.jpg");
+    background-size: 200px;
+    opacity: 0.05;
+    z-index: 0;
+  }
+
+  .bg-gradient-to-r > * {
+    position: relative;
+    z-index: 1;
+  }
+</style>

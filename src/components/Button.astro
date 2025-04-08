@@ -1,74 +1,74 @@
 ---
 interface Props {
-    label: string;
-    href?: string;
-    type?: "button" | "submit" | "reset";
-    variant?: "primary" | "secondary";
-    size?: "small" | "medium" | "large";
-    blank?: boolean;
+  label: string;
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  variant?: "primary" | "secondary";
+  size?: "small" | "medium" | "large";
+  blank?: boolean;
 }
 
 const {
-    label,
-    href,
-    type = "button",
-    variant = "primary",
-    size = "medium",
-    blank = false,
+  label,
+  href,
+  type = "button",
+  variant = "primary",
+  size = "medium",
+  blank = false,
 } = Astro.props;
 
 const baseClasses =
-    "inline-block rounded-md font-medium transition-transform transform hover:scale-105 border border-black";
+  "inline-block rounded-md font-medium transition-transform transform hover:scale-105 border border-black";
 const sizeClasses =
-    size === "small"
-        ? "px-4 py-2 text-sm"
-        : size === "large"
-          ? "px-8 py-4 text-lg"
-          : "px-6 py-3";
+  size === "small"
+    ? "px-4 py-2 text-sm"
+    : size === "large"
+      ? "px-8 py-4 text-lg"
+      : "px-6 py-3";
 const variantClasses =
-    variant === "secondary"
-        ? "bg-secondary text-secondary hover:bg-secondary-hover"
-        : "bg-primary text-white hover:bg-primary-hover";
+  variant === "secondary"
+    ? "bg-secondary text-secondary hover:bg-secondary-hover"
+    : "bg-primary text-white hover:bg-primary-hover";
 const classes = `${baseClasses} ${sizeClasses} ${variantClasses}`;
 ---
 
 {
-    href ? (
-        <a
-            href={href}
-            target={blank ? "_blank" : "_self"}
-            rel={blank ? "noopener noreferrer" : ""}
-            class={classes + " shadow-button"}
-        >
-            {label}
-        </a>
-    ) : (
-        <button type={type} class={classes + " shadow-button"}>
-            {label}
-        </button>
-    )
+  href ? (
+    <a
+      href={href}
+      target={blank ? "_blank" : "_self"}
+      rel={blank ? "noopener noreferrer" : ""}
+      class={classes + " shadow-button"}
+    >
+      {label}
+    </a>
+  ) : (
+    <button type={type} class={classes + " shadow-button"}>
+      {label}
+    </button>
+  )
 }
 
 <style>
-    .bg-primary {
-        background-color: #f6615a;
-    }
-    .bg-secondary {
-        background-color: #fdfdfc;
-    }
-    .hover\:bg-primary-hover:hover {
-        background-color: #e2564f;
-    }
-    .hover\:bg-secondary-hover:hover {
-        background-color: #f0f0f0;
-    }
-    .text-primary {
-        color: #fdfdfc;
-    }
-    .text-secondary {
-        color: #f6615a;
-    }
-    .shadow-button {
-        box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
-    }
+  .bg-primary {
+    background-color: #f6615a;
+  }
+  .bg-secondary {
+    background-color: #fdfdfc;
+  }
+  .hover\:bg-primary-hover:hover {
+    background-color: #e2564f;
+  }
+  .hover\:bg-secondary-hover:hover {
+    background-color: #f0f0f0;
+  }
+  .text-primary {
+    color: #fdfdfc;
+  }
+  .text-secondary {
+    color: #f6615a;
+  }
+  .shadow-button {
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
+  }
 </style>

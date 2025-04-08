@@ -4,6 +4,7 @@ import { urlForImage } from "../sanity/lib/urlForImage";
 import Layout from "../layouts/Layout.astro";
 import Cat from "../components/Cat.astro";
 import OurText from "../components/OurText.astro";
+import Button from "../components/Button.astro";
 
 interface Cat {
   name: string;
@@ -32,27 +33,289 @@ try {
 ---
 
 <Layout title="Our Cats">
-  <OurText title="Our Cats" />
-  <div class="max-w-7xl mx-auto px-4 md:px-8 py-8">
+  <!-- Hero Banner -->
+  <div class="bg-gradient-to-r from-orange-100 to-red-100 py-10">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <OurText title="Our Cats" className="mb-4" />
+      <p class="text-center max-w-2xl mx-auto text-gray-700 mb-6">
+        Meet our adorable cats waiting for their forever homes. Each has their
+        own unique personality and story.
+      </p>
+      <div class="flex justify-center">
+        <Button
+          label="Adoption Process"
+          href="/adopt"
+          variant="primary"
+          size="medium"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+    <!-- Filter and Search Controls -->
+    <div class="mb-8 bg-white rounded-xl shadow-md p-6">
+      <div
+        class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
+      >
+        <h2 class="text-2xl font-bold text-gray-800">
+          Find Your Perfect Companion
+        </h2>
+        <div class="relative">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search cats by name..."
+            class="pl-10 pr-4 py-2 border border-gray-300 rounded-md w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-red-300"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-4">
+        <button
+          class="filter-btn active py-2 px-4 rounded-full text-sm font-medium transition-colors"
+          data-filter="all"
+        >
+          All Cats
+        </button>
+        <button
+          class="filter-btn py-2 px-4 rounded-full text-sm font-medium transition-colors"
+          data-filter="male"
+        >
+          Males
+        </button>
+        <button
+          class="filter-btn py-2 px-4 rounded-full text-sm font-medium transition-colors"
+          data-filter="female"
+        >
+          Females
+        </button>
+        <button
+          class="filter-btn py-2 px-4 rounded-full text-sm font-medium transition-colors"
+          data-filter="kitten"
+        >
+          Kittens
+        </button>
+        <button
+          class="filter-btn py-2 px-4 rounded-full text-sm font-medium transition-colors"
+          data-filter="adult"
+        >
+          Adults
+        </button>
+      </div>
+    </div>
+
+    <!-- Cat Grid -->
+    <div id="cats-count" class="text-gray-600 mb-4">
+      Showing <span id="visible-count">{cats.length}</span> of {cats.length} cats
+    </div>
+
+    <div id="no-results" class="hidden text-center py-12">
+      <img
+        src="/images/cat-footer.svg"
+        alt="No cats found"
+        class="w-32 h-32 mx-auto mb-4 opacity-50"
+      />
+      <h3 class="text-xl font-semibold text-gray-700 mb-2">
+        No cats match your filters
+      </h3>
+      <p class="text-gray-600 mb-4">Try adjusting your search or filters</p>
+      <button
+        id="reset-filters"
+        class="text-red-500 font-medium hover:underline"
+      >
+        Reset all filters
+      </button>
+    </div>
+
     <section
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center justify-content-center"
+      id="cat-grid"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
     >
       {
         cats.length > 0 ? (
           cats.map((cat) => (
-            <Cat
-              name={cat.name}
-              age={cat.age}
-              gender={cat.gender}
-              description={cat.description}
-              photoUrl={urlForImage(cat.photo).width(400).height(300).url()}
-              instagramLink={cat.instagramLink}
-            />
+            <div
+              class="cat-card w-full"
+              data-name={cat.name.toLowerCase()}
+              data-gender={cat.gender.toLowerCase()}
+              data-age-group={
+                cat.age.toLowerCase().includes("month") ||
+                cat.age.toLowerCase().includes("week")
+                  ? "kitten"
+                  : "adult"
+              }
+            >
+              <Cat
+                name={cat.name}
+                age={cat.age}
+                gender={cat.gender}
+                description={cat.description}
+                photoUrl={urlForImage(cat.photo).width(400).height(300).url()}
+                instagramLink={cat.instagramLink}
+              />
+            </div>
           ))
         ) : (
-          <p>No cats available at the moment.</p>
+          <div class="col-span-full text-center py-12">
+            <p class="text-lg text-gray-700">
+              No cats available at the moment.
+            </p>
+            <p class="text-gray-600 mt-2">
+              Please check back soon or contact us for more information.
+            </p>
+          </div>
         )
       }
     </section>
+
+    <!-- Pagination or Load More (placeholder for future enhancement) -->
+    <!-- <div class="mt-12 text-center">
+      <Button label="Load More Cats" variant="secondary" size="medium" />
+    </div> -->
   </div>
 </Layout>
+
+<style>
+  .filter-btn {
+    background-color: #f3f4f6;
+    color: #4b5563;
+  }
+
+  .filter-btn:hover {
+    background-color: #e5e7eb;
+  }
+
+  .filter-btn.active {
+    background-color: #f6615a;
+    color: white;
+  }
+</style>
+
+<script>
+  // Filter and search functionality
+  document.addEventListener("DOMContentLoaded", function () {
+    const catCards = document.querySelectorAll<HTMLElement>(".cat-card");
+    const filterButtons = document.querySelectorAll<HTMLElement>(".filter-btn");
+    const searchInput = document.getElementById(
+      "search-input"
+    ) as HTMLInputElement;
+    const visibleCountElement = document.getElementById("visible-count");
+    const noResultsElement = document.getElementById("no-results");
+    const resetFiltersButton = document.getElementById("reset-filters");
+    const catGrid = document.getElementById("cat-grid");
+
+    let activeFilter = "all";
+    let searchTerm = "";
+
+    // Filter button click handler
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        // Remove active class from all buttons
+        filterButtons.forEach((btn) => btn.classList.remove("active"));
+
+        // Add active class to clicked button
+        button.classList.add("active");
+
+        // Set active filter
+        const filter = button.getAttribute("data-filter");
+        activeFilter = filter || "all";
+
+        // Apply filters
+        applyFilters();
+      });
+    });
+
+    // Search input handler
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        const target = e.target as HTMLInputElement;
+        searchTerm = target.value.toLowerCase().trim();
+        applyFilters();
+      });
+    }
+
+    // Reset filters button
+    if (resetFiltersButton) {
+      resetFiltersButton.addEventListener("click", () => {
+        // Reset active filter
+        activeFilter = "all";
+
+        // Clear search
+        if (searchInput) {
+          searchInput.value = "";
+          searchTerm = "";
+        }
+
+        // Reset filter buttons
+        filterButtons.forEach((btn) => {
+          btn.classList.remove("active");
+          if (btn.getAttribute("data-filter") === "all") {
+            btn.classList.add("active");
+          }
+        });
+
+        // Apply filters
+        applyFilters();
+      });
+    }
+
+    // Apply filters function
+    function applyFilters() {
+      let visibleCount = 0;
+
+      catCards.forEach((card) => {
+        const name = card.getAttribute("data-name") || "";
+        const gender = card.getAttribute("data-gender") || "";
+        const ageGroup = card.getAttribute("data-age-group") || "";
+
+        // Check if card passes all filters
+        const passesGenderFilter =
+          activeFilter === "all" ||
+          (activeFilter === "male" && gender === "male") ||
+          (activeFilter === "female" && gender === "female") ||
+          (activeFilter === "kitten" && ageGroup === "kitten") ||
+          (activeFilter === "adult" && ageGroup === "adult");
+
+        const passesSearchFilter =
+          searchTerm === "" || name.includes(searchTerm);
+
+        if (passesGenderFilter && passesSearchFilter) {
+          card.style.display = "";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      // Update visible count
+      if (visibleCountElement) {
+        visibleCountElement.textContent = visibleCount.toString();
+      }
+
+      // Show/hide no results message
+      if (noResultsElement && catGrid) {
+        if (visibleCount === 0) {
+          noResultsElement.classList.remove("hidden");
+          catGrid.classList.add("hidden");
+        } else {
+          noResultsElement.classList.add("hidden");
+          catGrid.classList.remove("hidden");
+        }
+      }
+    }
+  });
+</script>
