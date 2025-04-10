@@ -3,48 +3,49 @@
 /* Base font settings */
 body {
   font-family: "Roboto", sans-serif;
-  color: #2f2d30;
+  color: #4a4a3a;
   font-size: 16px;
   line-height: 1.6;
+  background-color: #f5f2e9;
 }
 
 /* Page Titles (h1 in hero sections) */
 .page-title {
-  @apply text-4xl md:text-5xl font-bold mb-6 text-gray-800;
+  @apply text-4xl md:text-5xl font-bold mb-6 text-olive-800;
 }
 
 /* Subtitle text in hero sections */
 .page-subtitle {
-  @apply text-lg md:text-xl max-w-3xl mx-auto mb-8 text-gray-700;
+  @apply text-lg md:text-xl max-w-3xl mx-auto mb-8 text-olive-700;
 }
 
 /* Section Titles (h2) */
 .section-title {
-  @apply text-2xl md:text-3xl font-bold mb-8 text-center text-gray-800;
+  @apply text-2xl md:text-3xl font-bold mb-8 text-center text-olive-800;
 }
 
 /* Card or component titles (h3) */
 .card-title {
-  @apply text-xl font-bold mb-4 text-gray-800;
+  @apply text-xl font-bold mb-4 text-olive-800;
 }
 
 /* Body text */
 .body-text {
-  @apply text-base text-gray-700;
+  @apply text-base text-olive-700;
 }
 
 /* Small text */
 .small-text {
-  @apply text-sm text-gray-600;
+  @apply text-sm text-olive-600;
 }
 
 /* Gradient backgrounds with paw pattern */
 .gradient-bg {
-  @apply bg-gradient-to-r from-orange-100 to-pink-100 relative overflow-hidden;
+  @apply bg-gradient-to-r from-beige-100 to-beige-200 relative overflow-hidden;
 }
 
 .gradient-bg-alt {
-  @apply bg-gradient-to-r from-blue-100 to-indigo-100 relative overflow-hidden;
+  @apply bg-gradient-to-r from-olive-100 to-olive-200 relative overflow-hidden;
 }
 
 .gradient-bg::before,
@@ -55,6 +56,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
+  background-image: url("/images/paw-pattern.svg");
   background-size: 200px;
   opacity: 0.05;
   z-index: 0;
@@ -68,13 +70,13 @@ body {
 
 /* Brand Colors */
 :root {
-  --primary-color: #f6615a;
-  --primary-hover: #e2564f;
-  --secondary-color: #fdfdfc;
-  --secondary-hover: #f0f0f0;
-  --background-color: #faf1ea;
-  --text-color: #2f2d30;
-  --footer-color: #313134;
+  --primary-color: #5a6b46;
+  --primary-hover: #4a5a3a;
+  --secondary-color: #f5f2e9;
+  --secondary-hover: #e8e3d5;
+  --background-color: #f5f2e9;
+  --text-color: #4a4a3a;
+  --footer-color: #3d4a30;
 }
 
 .text-color {
@@ -94,11 +96,11 @@ body {
 }
 
 .shadow-card {
-  box-shadow: 6px 6px 0px rgba(245, 97, 88, 255);
+  box-shadow: 6px 6px 0px rgba(90, 107, 70, 0.6);
 }
 
 .shadow-button {
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
+  box-shadow: 4px 4px 0px rgba(74, 74, 58, 0.7);
 }
 
 /* Custom animations */

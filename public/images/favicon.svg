@@ -1,0 +1,32 @@
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .paw {
+      fill: #5A6B46;
+    }
+    .inner {
+      fill: #E8E3D5;
+    }
+  </style>
+  
+  <!-- Cat silhouette paw print-->
+  <g class="paw">
+    <!-- Main pad -->
+    <ellipse cx="12" cy="13" rx="7" ry="6" />
+    <!-- Toe pads -->
+    <ellipse cx="7" cy="8" rx="4" ry="3.5" />
+    <ellipse cx="12" cy="6" rx="4" ry="3.5" />
+    <ellipse cx="17" cy="8" rx="4" ry="3.5" />
+    <ellipse cx="18" cy="14" rx="3" ry="4" transform="rotate(-15 18 14)" />
+  </g>
+  
+  <!-- Inner details -->
+  <g class="inner">
+    <!-- Inner pad -->
+    <ellipse cx="12" cy="13" rx="4" ry="3.5" />
+    <!-- Inner toe pads -->
+    <ellipse cx="7" cy="8" rx="2" ry="1.7" />
+    <ellipse cx="12" cy="6" rx="2" ry="1.7" />
+    <ellipse cx="17" cy="8" rx="2" ry="1.7" />
+    <ellipse cx="18" cy="14" rx="1.5" ry="2" transform="rotate(-15 18 14)" />
+  </g>
+</svg> 

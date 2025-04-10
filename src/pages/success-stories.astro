@@ -121,7 +121,7 @@ const displayedFosterStories =
 
 <Layout title="Success Stories">
   <!-- Hero Section -->
-  <div class="bg-gradient-to-r from-orange-100 to-pink-100 py-16">
+  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-16">
     <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
       <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
         Success Stories
@@ -234,10 +234,11 @@ const displayedFosterStories =
                     </span>
                   </div>
                   <div>
-                    <h3 class="font-bold text-gray-800">
-                      {story.name.split(" & ")[0]}
-                    </h3>
-                    <p class="text-gray-600 text-sm">{story.time}</p>
+                    <h3 class="font-bold text-gray-800">{story.name}</h3>
+                    <p class="text-gray-600 text-sm">
+                      {story.type === "foster" ? "Fostered " : ""}
+                      {story.time}
+                    </p>
                   </div>
                 </div>
                 <p class="text-gray-700 italic">"{story.story}"</p>
@@ -249,7 +250,7 @@ const displayedFosterStories =
 
       <div class="text-center mt-8">
         <Button
-          label="Become a Foster"
+          label="Become a Foster Parent"
           href="/foster"
           variant="primary"
           size="large"
@@ -259,7 +260,7 @@ const displayedFosterStories =
 
     <!-- Share Your Story Section -->
     <section
-      class="bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl p-8 text-center"
+      class="bg-gradient-to-r from-olive-100 to-olive-200 rounded-xl p-8 text-center mb-16"
     >
       <h2 class="text-3xl font-bold mb-4 text-gray-800">Share Your Story</h2>
       <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
@@ -269,7 +270,7 @@ const displayedFosterStories =
       <Button
         label="Contact Us"
         href="/contact"
-        variant="secondary"
+        variant="primary"
         size="large"
       />
     </section>
@@ -301,7 +302,7 @@ const displayedFosterStories =
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("/images/paw-pattern.jpg");
+    background-image: url("/images/paw-pattern.svg");
     background-size: 200px;
     opacity: 0.05;
     z-index: 0;

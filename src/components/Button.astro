@@ -18,7 +18,7 @@ const {
 } = Astro.props;
 
 const baseClasses =
-  "inline-block rounded-md font-medium transition-transform transform hover:scale-105 border border-black";
+  "inline-block rounded-md font-medium transition-transform transform hover:scale-105 border border-olive-900";
 const sizeClasses =
   size === "small"
     ? "px-4 py-2 text-sm"
@@ -51,24 +51,24 @@ const classes = `${baseClasses} ${sizeClasses} ${variantClasses}`;
 
 <style>
   .bg-primary {
-    background-color: #f6615a;
+    background-color: #5a6b46;
   }
   .bg-secondary {
-    background-color: #fdfdfc;
+    background-color: #f5f2e9;
   }
   .hover\:bg-primary-hover:hover {
-    background-color: #e2564f;
+    background-color: #4a5a3a;
   }
   .hover\:bg-secondary-hover:hover {
-    background-color: #f0f0f0;
+    background-color: #e8e3d5;
   }
   .text-primary {
-    color: #fdfdfc;
+    color: #f5f2e9;
   }
   .text-secondary {
-    color: #f6615a;
+    color: #5a6b46;
   }
   .shadow-button {
-    box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
+    box-shadow: 4px 4px 0px rgba(74, 74, 58, 0.7);
   }
 </style>

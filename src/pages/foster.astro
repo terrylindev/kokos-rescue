@@ -36,28 +36,21 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
 });
 ---
 
-<Layout title="Foster Information">
+<Layout title="Foster a Cat">
   <!-- Hero Section -->
-  <div class="bg-gradient-to-r from-blue-100 to-purple-100 py-16">
+  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-16">
     <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
       <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
-        Become a Foster
+        Foster a Cat
       </h1>
       <p class="text-xl max-w-3xl mx-auto mb-8 text-gray-700">
-        Fostering saves lives. By opening your home temporarily, you help us
-        rescue more cats and prepare them for their forever homes.
+        Make a temporary but meaningful difference in a cat's life.
       </p>
-      <div class="flex justify-center gap-4 flex-wrap">
+      <div class="flex justify-center">
         <Button
-          label="Learn More"
-          href="#foster-reasons"
+          label="Apply to Foster"
+          href="#foster-form"
           variant="primary"
-          size="large"
-        />
-        <Button
-          label="Apply Now"
-          href="#application-form"
-          variant="secondary"
           size="large"
         />
       </div>
@@ -66,29 +59,29 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
 
   <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
     <!-- Introduction Section -->
-    <div class="bg-white rounded-xl shadow-md p-8 mb-12">
-      <div class="flex flex-col md:flex-row items-center gap-8">
-        <div class="md:w-1/2">
-          <h2 class="text-3xl font-bold mb-4 text-gray-800">
+    <div class="bg-white rounded-xl shadow-md p-6 mb-12 max-w-5xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center gap-6">
+        <div class="md:w-3/5">
+          <h2 class="text-2xl font-bold mb-3 text-gray-800">
             What is Fostering?
           </h2>
-          <p class="text-gray-700 mb-4">
+          <p class="text-gray-700 mb-3 text-sm">
             Fostering means providing temporary care for a cat in your home
             until they find their permanent family. As a foster parent, you'll
             help cats adjust to home life, receive necessary medical care, and
             prepare for adoption.
           </p>
-          <p class="text-gray-700">
+          <p class="text-gray-700 text-sm">
             Koko's Rescue provides all necessary supplies and covers medical
             expenses. You provide the love, care, and socialization these cats
             need to thrive.
           </p>
         </div>
-        <div class="md:w-1/2">
+        <div class="md:w-2/5">
           <img
-            src="/images/fish-bowl.svg"
+            src="/images/playful-cat.svg"
             alt="Cat Fostering"
-            class="w-full max-w-md mx-auto rounded-lg"
+            class="w-full max-w-xs mx-auto rounded-lg"
           />
         </div>
       </div>
@@ -100,7 +93,7 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
         Why Foster with Us?
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {
           fosterReasons.map((reason) => (
             <NumberedCard
@@ -211,7 +204,7 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
 
     <!-- CTA Section -->
     <div
-      class="bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl p-8 mb-16 text-center"
+      class="bg-gradient-to-r from-olive-100 to-olive-200 rounded-xl p-8 mb-16 text-center"
     >
       <h2 class="text-3xl font-bold mb-4 text-gray-800">
         Ready to Change Lives?
@@ -240,13 +233,13 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
 
 <style>
   .shadow-orange {
-    box-shadow: 0 4px 0 0 rgba(237, 137, 54, 0.5);
+    box-shadow: 0 4px 0 0 rgba(90, 107, 70, 0.8);
   }
   .shadow-blue {
-    box-shadow: 0 4px 0 0 rgba(66, 153, 225, 0.5);
+    box-shadow: 0 4px 0 0 rgba(90, 107, 70, 0.6);
   }
   .shadow-yellow {
-    box-shadow: 0 4px 0 0 rgba(236, 201, 75, 0.5);
+    box-shadow: 0 4px 0 0 rgba(90, 107, 70, 0.4);
   }
 
   /* Button hover effect */
@@ -271,7 +264,7 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("/images/paw-pattern.jpg");
+    background-image: url("/images/paw-pattern.svg");
     background-size: 200px;
     opacity: 0.05;
     z-index: 0;
@@ -289,11 +282,12 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
 
   /* Enhanced numbered cards */
   :global(.bg-color) {
-    background-color: #f6615a;
+    background-color: #5a6b46;
   }
 
   /* Add hover effect to numbered cards */
   :global(div:has(> h1.bg-color)) {
     transition: transform 0.3s ease;
+    background-color: rgba(245, 242, 233, 0.85);
   }
 </style>
