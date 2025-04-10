@@ -1,0 +1,189 @@
+---
+import { loadQuery } from "../sanity/lib/load-query";
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+
+interface FAQ {
+  _id: string;
+  question: string;
+  answer: string;
+  category: string;
+  order: number;
+}
+
+// Fetch FAQs from Sanity
+const { data: faqs } = await loadQuery<FAQ[]>({
+  query: `*[_type == "faq"] | order(order asc)`,
+});
+
+// Group FAQs by category
+const groupedFaqs: Record<string, FAQ[]> = {};
+
+// Initialize with empty arrays for each category to ensure order
+const categories = ["general", "adoption", "foster", "donation", "contact"];
+categories.forEach((category) => {
+  groupedFaqs[category] = [];
+});
+
+// Populate categories with data
+faqs?.forEach((faq) => {
+  if (faq.category) {
+    if (!groupedFaqs[faq.category]) {
+      groupedFaqs[faq.category] = [];
+    }
+    groupedFaqs[faq.category].push(faq);
+  }
+});
+
+// Category titles for display
+const categoryTitles: Record<string, string> = {
+  general: "General Questions",
+  adoption: "Adoption Questions",
+  foster: "Foster Questions",
+  donation: "Donation Questions",
+  contact: "Contact Questions",
+};
+---
+
+<Layout title="Frequently Asked Questions">
+  <!-- Hero Section -->
+  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-16">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+        Frequently Asked Questions
+      </h1>
+      <p class="text-xl max-w-3xl mx-auto mb-8 text-gray-700">
+        Find answers to common questions about our cats, adoption process,
+        fostering, and more.
+      </p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+    <!-- Category Navigation -->
+    <div class="mb-12 flex flex-wrap justify-center gap-4">
+      {
+        categories.map(
+          (category) =>
+            groupedFaqs[category]?.length > 0 && (
+              <a
+                href={`#${category}`}
+                class="px-6 py-2 bg-olive-100 hover:bg-olive-200 rounded-full text-olive-800 font-medium transition-colors"
+              >
+                {categoryTitles[category]}
+              </a>
+            )
+        )
+      }
+    </div>
+
+    <!-- FAQ Sections by Category -->
+    {
+      categories.map(
+        (category) =>
+          groupedFaqs[category]?.length > 0 && (
+            <section id={category} class="mb-16">
+              <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+                {categoryTitles[category]}
+              </h2>
+
+              <div class="space-y-6">
+                {groupedFaqs[category].map((faq: FAQ) => (
+                  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <details class="group">
+                      <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6">
+                        <h3 class="text-xl font-bold text-gray-800">
+                          {faq.question}
+                        </h3>
+                        <span class="transition group-open:rotate-180">
+                          <svg
+                            fill="none"
+                            height="24"
+                            shape-rendering="geometricPrecision"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="1.5"
+                            viewBox="0 0 24 24"
+                            width="24"
+                          >
+                            <path d="M6 9l6 6 6-6" />
+                          </svg>
+                        </span>
+                      </summary>
+                      <div class="px-6 pb-6 text-gray-700">
+                        <p>{faq.answer}</p>
+                      </div>
+                    </details>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+      )
+    }
+
+    <!-- Still Have Questions Section -->
+    <section
+      class="bg-gradient-to-r from-olive-100 to-olive-200 rounded-xl p-8 text-center mb-8"
+    >
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">
+        Still Have Questions?
+      </h2>
+      <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
+        Can't find the answer you're looking for? Please contact us for more
+        information.
+      </p>
+      <Button
+        label="Contact Us"
+        href="/contact"
+        variant="primary"
+        size="large"
+      />
+    </section>
+  </div>
+</Layout>
+
+<style>
+  /* Custom styles for the FAQ page */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details > summary {
+    list-style: none;
+  }
+
+  details[open] summary {
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .bg-gradient-to-r {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-gradient-to-r::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/images/paw-pattern.svg");
+    background-size: 200px;
+    opacity: 0.05;
+    z-index: 0;
+  }
+
+  .bg-gradient-to-r > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+  }
+</style>

@@ -129,13 +129,13 @@ const { data: formUrl } = await loadQuery<{ formUrl: string }>({
           icon="/images/icons8-drug.webp"
           title={adoptionItem4.title}
           bulletPoints={adoptionItem4.bulletPoints}
-          className="shadow-orange transform transition-transform hover:scale-105"
+          className="shadow-green transform transition-transform hover:scale-105"
         />
         <InfoCard
           icon="/images/icons8-vaccine.webp"
           title={adoptionItem5.title}
           bulletPoints={adoptionItem5.bulletPoints}
-          className="shadow-blue transform transition-transform hover:scale-105"
+          className="shadow-purple transform transition-transform hover:scale-105"
         />
       </div>
     </div>
@@ -157,57 +157,19 @@ const { data: formUrl } = await loadQuery<{ formUrl: string }>({
       />
     </div>
 
-    <!-- FAQ Section -->
-    <div class="bg-white rounded-xl shadow-md p-8 mb-16">
-      <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
-        Frequently Asked Questions
-      </h2>
-
-      <div class="space-y-4 max-w-4xl mx-auto">
-        <div class="border-b border-gray-200 pb-4">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">
-            How long does the adoption process take?
-          </h3>
-          <p class="text-gray-700">
-            The adoption process typically takes 1-2 weeks from application to
-            bringing your new cat home. This includes application review, home
-            check, and preparing for your new family member.
-          </p>
-        </div>
-
-        <div class="border-b border-gray-200 pb-4">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">
-            What if the cat I adopt isn't a good fit?
-          </h3>
-          <p class="text-gray-700">
-            We have a 2-week adjustment period. If things aren't working out,
-            we'll work with you to find a solution, which may include taking the
-            cat back into our care.
-          </p>
-        </div>
-
-        <div class="border-b border-gray-200 pb-4">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">
-            Do you adopt to families outside of NYC?
-          </h3>
-          <p class="text-gray-700">
-            Yes, we consider adoptions within a reasonable distance of NYC,
-            generally within a 50-mile radius, to ensure we can conduct home
-            checks and provide post-adoption support.
-          </p>
-        </div>
-
-        <div class="pb-4">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">
-            Can I meet the cat before adopting?
-          </h3>
-          <p class="text-gray-700">
-            Absolutely! We encourage meet-and-greets before finalizing any
-            adoption. This helps ensure a good match between you and your
-            potential new family member.
-          </p>
-        </div>
-      </div>
+    <!-- FAQ Link Section -->
+    <div class="bg-white rounded-xl shadow-md p-8 mb-16 text-center">
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">Have Questions?</h2>
+      <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
+        Find answers to common questions about the adoption process,
+        requirements, and what to expect.
+      </p>
+      <Button
+        label="View FAQs"
+        href="/faq#adoption"
+        variant="primary"
+        size="medium"
+      />
     </div>
 
     <!-- Application Form Section with ID for scroll target -->

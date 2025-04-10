@@ -11,7 +11,8 @@ import OurText from "./ourText";
 import foster from "./foster";
 import fosterReasons from "./fosterReasons";
 import successStory from "./successStory";
+import faq from "./faq";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [homeCard, heroText, about, contact, cat, donate, adoption, googleForm, OurText, foster, fosterReasons, successStory],
+  types: [homeCard, heroText, about, contact, cat, donate, adoption, googleForm, OurText, foster, fosterReasons, successStory, faq],
 };

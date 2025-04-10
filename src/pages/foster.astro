@@ -59,25 +59,25 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
 
   <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
     <!-- Introduction Section -->
-    <div class="bg-white rounded-xl shadow-md p-6 mb-12 max-w-5xl mx-auto">
-      <div class="flex flex-col md:flex-row items-center gap-6">
-        <div class="md:w-3/5">
-          <h2 class="text-2xl font-bold mb-3 text-gray-800">
+    <div class="bg-white rounded-xl shadow-md p-8 mb-12">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="md:w-1/2">
+          <h2 class="text-3xl font-bold mb-4 text-gray-800">
             What is Fostering?
           </h2>
-          <p class="text-gray-700 mb-3 text-sm">
+          <p class="text-gray-700 mb-4">
             Fostering means providing temporary care for a cat in your home
             until they find their permanent family. As a foster parent, you'll
             help cats adjust to home life, receive necessary medical care, and
             prepare for adoption.
           </p>
-          <p class="text-gray-700 text-sm">
+          <p class="text-gray-700m">
             Koko's Rescue provides all necessary supplies and covers medical
             expenses. You provide the love, care, and socialization these cats
             need to thrive.
           </p>
         </div>
-        <div class="md:w-2/5">
+        <div class="md:w-1/2">
           <img
             src="/images/playful-cat.svg"
             alt="Cat Fostering"
@@ -149,80 +149,25 @@ const { data: fosterReasons } = await loadQuery<FosterReasons[]>({
       </div>
     </div>
 
-    <!-- FAQ Section -->
-    <div class="bg-white rounded-xl shadow-md p-8 mb-16">
-      <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
-        Frequently Asked Questions
-      </h2>
-
-      <div class="space-y-4 max-w-4xl mx-auto">
-        <div class="border-b border-gray-200 pb-4">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">
-            How long do cats typically stay in foster care?
-          </h3>
-          <p class="text-gray-700">
-            Foster periods typically range from 2-8 weeks, depending on the
-            cat's needs and adoption timeline. We'll discuss the expected
-            timeframe when matching you with a foster cat.
-          </p>
-        </div>
-
-        <div class="border-b border-gray-200 pb-4">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">
-            What if I already have pets?
-          </h3>
-          <p class="text-gray-700">
-            Many of our foster parents have resident pets. We'll work with you
-            to find a foster cat that's compatible with your current pets, and
-            provide guidance on safe introductions.
-          </p>
-        </div>
-
-        <div class="border-b border-gray-200 pb-4">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">
-            What supplies do I need?
-          </h3>
-          <p class="text-gray-700">
-            Koko's Rescue provides all necessary supplies: food, litter, litter
-            box, toys, and bedding. We also cover all medical expenses. You just
-            provide the space and love!
-          </p>
-        </div>
-
-        <div class="pb-4">
-          <h3 class="text-xl font-bold text-gray-800 mb-2">
-            What if I get attached to my foster cat?
-          </h3>
-          <p class="text-gray-700">
-            Foster fails happen! If you fall in love with your foster cat, you
-            can apply to adopt them. Many of our foster parents have ended up
-            adopting one of their fosters, and it's a beautiful outcome.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div
-      class="bg-gradient-to-r from-olive-100 to-olive-200 rounded-xl p-8 mb-16 text-center"
-    >
+    <!-- FAQ Link Section -->
+    <div class="bg-white rounded-xl shadow-md p-8 mb-16 text-center">
       <h2 class="text-3xl font-bold mb-4 text-gray-800">
-        Ready to Change Lives?
+        Have Questions About Fostering?
       </h2>
-      <p class="text-xl mb-8 max-w-3xl mx-auto text-gray-700">
-        Every cat in foster care means another cat we can rescue. Join our
-        foster team today and make a difference!
+      <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
+        Find answers to common questions about fostering cats, including what
+        supplies you'll need and how long foster periods typically last.
       </p>
       <Button
-        label="Become a Foster"
-        href="#application-form"
+        label="View Foster FAQs"
+        href="/faq#foster"
         variant="primary"
-        size="large"
+        size="medium"
       />
     </div>
 
     <!-- Application Form Section -->
-    <div id="application-form">
+    <div id="foster-form">
       <ApplicationCard
         title="Foster"
         formUrl={formUrl?.formUrl || "https://tally.so/r/woJQD2"}
