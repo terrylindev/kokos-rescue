@@ -179,7 +179,9 @@ const displayedFosterStories =
                     </p>
                   </div>
                 </div>
-                <p class="text-gray-700 italic">"{story.story}"</p>
+                <p class="story-description text-gray-700 italic">
+                  "{story.story}"
+                </p>
               </div>
             </div>
           ))
@@ -241,7 +243,9 @@ const displayedFosterStories =
                     </p>
                   </div>
                 </div>
-                <p class="text-gray-700 italic">"{story.story}"</p>
+                <p class="story-description text-gray-700 italic">
+                  "{story.story}"
+                </p>
               </div>
             </div>
           ))
@@ -311,5 +315,29 @@ const displayedFosterStories =
   .bg-gradient-to-r > * {
     position: relative;
     z-index: 1;
+  }
+
+  /* Story description scroll styles */
+  .story-description {
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 5px;
+    /* Subtle scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+  }
+
+  /* Webkit scrollbar styling for Chrome, Safari, etc. */
+  .story-description::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .story-description::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .story-description::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 4px;
   }
 </style>

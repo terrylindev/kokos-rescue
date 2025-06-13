@@ -41,27 +41,50 @@ const paragraphs = content.split("\n");
   </div>
 
   <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
-    <!-- Main Content Section -->
-    <section class="flex flex-col lg:flex-row gap-12 mb-16">
-      <!-- Left Column: Image -->
-      <div class="lg:w-1/2 overflow-hidden rounded-xl shadow-xl">
-        <img
-          src="/images/adopt-cat.svg"
-          alt="About Us Image"
-          class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-        />
+    <!-- Main Content Section - Mission -->
+    <section class="mb-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 inline-block relative">
+          Our Mission
+          <span
+            class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-olive-300 to-olive-100"
+          ></span>
+        </h2>
       </div>
 
-      <!-- Right Column: Content -->
-      <div class="lg:w-1/2">
-        <div class="bg-white p-8 rounded-xl shadow-md h-full">
-          <h2
-            class="text-3xl font-bold mb-6 text-gray-800 border-b-2 border-olive-300 pb-2"
-          >
-            Our Mission
-          </h2>
-          <div class="prose prose-lg max-w-none text-gray-700 space-y-4">
-            {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="flex flex-col lg:flex-row">
+          <!-- Mission Image and Quote -->
+          <div class="lg:w-2/5 relative">
+            <div
+              class="h-full bg-gradient-to-br from-olive-100 to-olive-200 p-8 flex items-center justify-center"
+            >
+              <div class="relative z-10 text-center">
+                <div class="mx-auto w-48 h-48 mb-6 overflow-hidden">
+                  <img
+                    src="/images/adopt-cat.svg"
+                    alt="Cat illustration"
+                    class="w-full h-full object-contain"
+                  />
+                </div>
+                <blockquote class="italic text-gray-700 font-medium text-lg">
+                  "Rescuing a cat may not change the world, but for that one
+                  cat, the world changes forever."
+                </blockquote>
+              </div>
+              <div class="absolute inset-0 opacity-10 pattern-paw"></div>
+            </div>
+          </div>
+
+          <!-- Mission Content -->
+          <div class="lg:w-3/5 p-8 lg:p-12">
+            <div class="prose prose-lg max-w-none text-gray-700 space-y-4">
+              {
+                paragraphs.map((paragraph) => (
+                  <p class="leading-relaxed">{paragraph}</p>
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>
@@ -69,37 +92,43 @@ const paragraphs = content.split("\n");
 
     <!-- Values Section -->
     <section class="mb-16">
-      <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">
-        Our Core Values
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 inline-block relative">
+          Our Core Values
+          <span
+            class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-olive-300 to-olive-100"
+          ></span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div
-          class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:shadow-lg transition-shadow"
+          class="bg-white p-8 rounded-xl shadow-md flex flex-col items-center text-center transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
         >
-          <div class="bg-olive-100 p-3 rounded-full mb-4">
+          <div class="bg-olive-100 p-5 rounded-full mb-6 shadow-inner">
             <img
               src="/images/icons8-cat-64.webp"
               alt="Compassion"
-              class="w-10 h-10"
+              class="w-12 h-12"
             />
           </div>
-          <h3 class="text-xl font-semibold mb-2 text-gray-800">Compassion</h3>
+          <h3 class="text-xl font-semibold mb-3 text-gray-800">Compassion</h3>
           <p class="text-gray-600">
             Every cat in our care receives love, respect, and dignity.
           </p>
         </div>
 
         <div
-          class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:shadow-lg transition-shadow"
+          class="bg-white p-8 rounded-xl shadow-md flex flex-col items-center text-center transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
         >
-          <div class="bg-olive-100 p-3 rounded-full mb-4">
+          <div class="bg-olive-100 p-5 rounded-full mb-6 shadow-inner">
             <img
               src="/images/icons8-requirement.webp"
               alt="Education"
-              class="w-10 h-10"
+              class="w-12 h-12"
             />
           </div>
-          <h3 class="text-xl font-semibold mb-2 text-gray-800">Education</h3>
+          <h3 class="text-xl font-semibold mb-3 text-gray-800">Education</h3>
           <p class="text-gray-600">
             We believe in teaching proper cat care and responsible pet
             ownership.
@@ -107,16 +136,16 @@ const paragraphs = content.split("\n");
         </div>
 
         <div
-          class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center hover:shadow-lg transition-shadow"
+          class="bg-white p-8 rounded-xl shadow-md flex flex-col items-center text-center transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
         >
-          <div class="bg-olive-100 p-3 rounded-full mb-4">
+          <div class="bg-olive-100 p-5 rounded-full mb-6 shadow-inner">
             <img
               src="/images/icons8-vaccine.webp"
               alt="Health"
-              class="w-10 h-10"
+              class="w-12 h-12"
             />
           </div>
-          <h3 class="text-xl font-semibold mb-2 text-gray-800">Health</h3>
+          <h3 class="text-xl font-semibold mb-3 text-gray-800">Health</h3>
           <p class="text-gray-600">
             All cats receive proper veterinary care, vaccinations, and
             treatment.
@@ -127,69 +156,110 @@ const paragraphs = content.split("\n");
 
     <!-- How We Help Section -->
     <section class="mb-16">
-      <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">
-        How We Help
-      </h2>
-      <div class="relative">
-        <!-- Timeline Line -->
-        <div
-          class="hidden md:block absolute left-1/2 h-full w-0.5 bg-olive-300 transform -translate-x-1/2"
-        >
-        </div>
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 inline-block relative">
+          How We Help
+          <span
+            class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-olive-100 to-olive-200"
+          ></span>
+        </h2>
+      </div>
 
-        <!-- Timeline Items -->
-        <div class="space-y-12">
-          <!-- Item 1 -->
-          <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right">
-              <h3 class="text-xl font-semibold mb-2 text-gray-800">Rescue</h3>
-              <p class="text-gray-600">
-                We rescue cats from various challenging situations, giving them
-                a second chance at life.
-              </p>
-            </div>
-            <div
-              class="md:w-8 md:h-8 bg-olive-700 rounded-full z-10 my-2 md:my-0"
-            >
-            </div>
-            <div class="md:w-1/2 md:pl-12"></div>
+      <div
+        class="bg-white rounded-2xl shadow-lg p-8 md:p-12 relative overflow-hidden"
+      >
+        <div class="absolute inset-0 opacity-5 pattern-paw"></div>
+        <div class="relative z-10">
+          <!-- Timeline Line -->
+          <div
+            class="hidden md:block absolute left-1/2 h-full w-1 bg-gradient-to-b from-olive-300 via-olive-400 to-olive-300 transform -translate-x-1/2 rounded-full"
+          >
           </div>
 
-          <!-- Item 2 -->
-          <div class="flex flex-col md:flex-row items-center">
-            <div
-              class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right order-1 md:order-1"
-            >
+          <!-- Timeline Items -->
+          <div class="space-y-16 md:space-y-24 relative">
+            <!-- Item 1 -->
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="md:w-1/2 md:pr-16 mb-6 md:mb-0 md:text-right">
+                <div class="bg-beige-50 rounded-xl shadow-md p-6 inline-block">
+                  <h3 class="text-2xl font-semibold mb-3 text-olive-700">
+                    Rescue
+                  </h3>
+                  <p class="text-gray-600">
+                    We rescue cats from various challenging situations, giving
+                    them a second chance at life.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="md:w-12 md:h-12 bg-olive-500 border-4 border-white rounded-full z-10 my-2 md:my-0 shadow-lg flex items-center justify-center"
+              >
+                <span class="text-white font-bold">1</span>
+              </div>
+              <div class="md:w-1/2 md:pl-16">
+                <img
+                  src="/images/cat-family-bro.svg"
+                  alt="Rescue"
+                  class="w-32 h-32 mx-auto opacity-80"
+                />
+              </div>
             </div>
-            <div
-              class="md:w-8 md:h-8 bg-olive-700 rounded-full z-10 my-2 md:my-0 order-2 md:order-2"
-            >
-            </div>
-            <div class="md:w-1/2 md:pl-12 order-3 md:order-3">
-              <h3 class="text-xl font-semibold mb-2 text-gray-800">
-                Rehabilitate
-              </h3>
-              <p class="text-gray-600">
-                We provide medical care, socialization, and a safe environment
-                for cats to heal and grow.
-              </p>
-            </div>
-          </div>
 
-          <!-- Item 3 -->
-          <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right">
-              <h3 class="text-xl font-semibold mb-2 text-gray-800">Rehome</h3>
-              <p class="text-gray-600">
-                We carefully match cats with loving families where they'll
-                thrive for the rest of their lives.
-              </p>
+            <!-- Item 2 -->
+            <div class="flex flex-col md:flex-row items-center">
+              <div
+                class="md:w-1/2 md:pr-16 mb-6 md:mb-0 md:text-right order-1 md:order-1"
+              >
+                <img
+                  src="/images/fish-bowl.svg"
+                  alt="Rehabilitate"
+                  class="w-32 h-32 mx-auto opacity-80"
+                />
+              </div>
+              <div
+                class="md:w-12 md:h-12 bg-olive-500 border-4 border-white rounded-full z-10 my-2 md:my-0 order-2 md:order-2 shadow-lg flex items-center justify-center"
+              >
+                <span class="text-white font-bold">2</span>
+              </div>
+              <div class="md:w-1/2 md:pl-16 order-3 md:order-3">
+                <div class="bg-beige-50 rounded-xl shadow-md p-6 inline-block">
+                  <h3 class="text-2xl font-semibold mb-3 text-olive-700">
+                    Rehabilitate
+                  </h3>
+                  <p class="text-gray-600">
+                    We provide medical care, socialization, and a safe
+                    environment for cats to heal and grow.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div
-              class="md:w-8 md:h-8 bg-olive-700 rounded-full z-10 my-2 md:my-0"
-            >
+
+            <!-- Item 3 -->
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="md:w-1/2 md:pr-16 mb-6 md:mb-0 md:text-right">
+                <div class="bg-beige-50 rounded-xl shadow-md p-6 inline-block">
+                  <h3 class="text-2xl font-semibold mb-3 text-olive-700">
+                    Rehome
+                  </h3>
+                  <p class="text-gray-600">
+                    We carefully match cats with loving families where they'll
+                    thrive for the rest of their lives.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="md:w-12 md:h-12 bg-olive-500 border-4 border-white rounded-full z-10 my-2 md:my-0 shadow-lg flex items-center justify-center"
+              >
+                <span class="text-white font-bold">3</span>
+              </div>
+              <div class="md:w-1/2 md:pl-16">
+                <img
+                  src="/images/cat_vase.svg"
+                  alt="Rehome"
+                  class="w-32 h-32 mx-auto opacity-80"
+                />
+              </div>
             </div>
-            <div class="md:w-1/2 md:pl-12"></div>
           </div>
         </div>
       </div>
@@ -197,33 +267,37 @@ const paragraphs = content.split("\n");
 
     <!-- CTA Section -->
     <section
-      class="bg-gradient-to-r from-olive-100 to-olive-200 rounded-xl p-8 text-center"
+      class="bg-gradient-to-r from-olive-100 to-olive-200 rounded-xl p-10 text-center relative overflow-hidden"
     >
-      <h2 class="text-3xl font-bold mb-4 text-gray-800">
-        Want to Make a Difference?
-      </h2>
-      <p class="mb-6 text-lg text-gray-700">
-        Join our mission to rescue and rehome cats in need
-      </p>
-      <div class="flex flex-wrap justify-center gap-4">
-        <Button
-          label="Adopt a Cat"
-          href="/adopt"
-          variant="primary"
-          size="medium"
-        />
-        <Button
-          label="Become a Foster"
-          href="/foster"
-          variant="primary"
-          size="medium"
-        />
-        <Button
-          label="Donate Now"
-          href="/donate"
-          variant="primary"
-          size="medium"
-        />
+      <div class="absolute inset-0 opacity-10 pattern-paw"></div>
+      <div class="relative z-10">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800">
+          Want to Make a Difference?
+        </h2>
+        <p class="mb-8 text-lg text-gray-700 max-w-2xl mx-auto">
+          Join our mission to rescue and rehome cats in need. Every donation,
+          adoption, and foster home makes a real impact in a cat's life.
+        </p>
+        <div class="flex flex-wrap justify-center gap-6">
+          <Button
+            label="Adopt a Cat"
+            href="/adopt"
+            variant="primary"
+            size="medium"
+          />
+          <Button
+            label="Become a Foster"
+            href="/foster"
+            variant="primary"
+            size="medium"
+          />
+          <Button
+            label="Donate Now"
+            href="/donate"
+            variant="primary"
+            size="medium"
+          />
+        </div>
       </div>
     </section>
   </div>
@@ -234,9 +308,11 @@ const paragraphs = content.split("\n");
   @keyframes fadeIn {
     from {
       opacity: 0;
+      transform: translateY(10px);
     }
     to {
       opacity: 1;
+      transform: translateY(0);
     }
   }
 
@@ -265,5 +341,21 @@ const paragraphs = content.split("\n");
   .bg-gradient-to-r > * {
     position: relative;
     z-index: 1;
+  }
+
+  .pattern-paw {
+    background-image: url("/images/paw-pattern.svg");
+    background-size: 200px;
+  }
+
+  /* Additional heading styles */
+  h2.text-3xl {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  /* Enhanced animation for cards */
+  .grid > div {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 </style>
