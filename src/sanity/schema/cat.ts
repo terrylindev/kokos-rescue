@@ -35,16 +35,6 @@ export default defineType({
             type: 'text',
         }),
         defineField({
-            name: 'photo',
-            title: 'Photo (Legacy)',
-            type: 'image',
-            options: {
-                hotspot: true,
-            },
-            description: 'Legacy single photo field. Use "Additional Photos" for new uploads.',
-            hidden: ({ document }) => !!(document?.photos && (document.photos as unknown[]).length > 0),
-        }),
-        defineField({
             name: 'photos',
             title: 'Photos',
             type: 'array',
@@ -57,6 +47,7 @@ export default defineType({
                 },
             ],
             description: 'Add multiple photos for this cat. The first photo will be shown as the main image.',
+            validation: Rule => Rule.required().min(1).error('At least one photo is required'),
         }),
         defineField({
             name: 'instagramLink',

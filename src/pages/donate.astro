@@ -4,45 +4,57 @@ import Layout from "../layouts/Layout.astro";
 import DonationMethod from "../components/DonationMethod.astro";
 import OurText from "../components/OurText.astro";
 
-interface DonationMethod {
+interface DonationMethodData {
     name: string;
     url: string;
 }
 
 // Fetch donation methods data from Sanity
-const { data: donationMethods } = await loadQuery<DonationMethod[]>({
-    query: `*[_type == "donationMethod"]{name, url}`,
-});
+let donationMethods: DonationMethodData[] = [];
+
+try {
+    const { data } = await loadQuery<DonationMethodData[]>({
+        query: `*[_type == "donationMethod"]{name, url}`,
+    });
+    donationMethods = data || [];
+} catch (error) {
+    console.error("Failed to load donation methods:", error);
+}
 ---
 
-<Layout title="Donate">
+<Layout title="Donate" description="Support Koko's Rescue NYC with your donation. Help us provide food, medical care, and loving homes to cats in need.">
     <OurText title="Donation Methods" />
     <section class="container mx-auto">
         <div class="flex flex-col items-center mb-8">
             <img
                 src="/images/fish-bowl.svg"
-                alt="Fish bowl"
+                alt="Fish bowl illustration"
                 class="w-full max-w-xs sm:max-w-sm"
+                loading="lazy"
             />
             <p class="text-gray-700 text-lg text-center max-w-xl">
                 Your contributions help us provide food, medical care, and
                 loving homes to animals in need. Choose a donation method below.
             </p>
         </div>
-        <div class="flex justify-center items-center">
+        <div class="flex flex-wrap justify-center items-center gap-4 md:gap-0">
             {
-                donationMethods.map((method, index) => (
-                    <div class="flex items-center">
-                        <DonationMethod
-                            icon={`/images/icons8-${method.name.toLowerCase().replace(/\s+/g, "-")}.svg`}
-                            name={method.name}
-                            url={method.url}
-                        />
-                        {index < donationMethods.length - 1 && (
-                            <div class="border-r border-gray-300 h-16 mx-6" />
-                        )}
-                    </div>
-                ))
+                donationMethods.length > 0 ? (
+                    donationMethods.map((method, index) => (
+                        <div class="flex items-center">
+                            <DonationMethod
+                                icon={`/images/icons8-${method.name.toLowerCase().replace(/\s+/g, "-")}.svg`}
+                                name={method.name}
+                                url={method.url}
+                            />
+                            {index < donationMethods.length - 1 && (
+                                <div class="hidden md:block border-r border-gray-300 h-16 mx-6" />
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p class="text-gray-600">Donation methods coming soon. Please check back later.</p>
+                )
             }
         </div>
     </section>

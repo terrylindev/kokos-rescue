@@ -6,12 +6,23 @@ interface ContactData {
   instagram: string;
 }
 
-// Fetch contact page data from Sanity
-const { data: contactData } = await loadQuery<ContactData>({
-  query: `*[_type == "contact"][0]{email, instagram}`,
-});
+// Default fallback values
+let email = "contact@kokosrescue.com";
+let instagram = "kokosrescue";
 
-const { email, instagram } = contactData;
+// Fetch contact page data from Sanity
+try {
+  const { data: contactData } = await loadQuery<ContactData>({
+    query: `*[_type == "contact"][0]{email, instagram}`,
+  });
+  
+  if (contactData) {
+    email = contactData.email || email;
+    instagram = contactData.instagram || instagram;
+  }
+} catch (error) {
+  console.error("Failed to load contact data for footer:", error);
+}
 
 // Get current year for copyright
 const currentYear = new Date().getFullYear();

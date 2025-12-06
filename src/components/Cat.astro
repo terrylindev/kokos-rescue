@@ -35,7 +35,7 @@ const hasMultiplePhotos = photoUrls.length > 1;
           class={`carousel-slide absolute inset-0 transition-opacity duration-300 ${index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           data-index={index}
         >
-          <img src={url} alt={`${name} - Photo ${index + 1}`} class="w-full h-full object-cover" />
+          <img src={url} alt={`${name} - Photo ${index + 1}`} class="w-full h-full object-cover" loading="lazy" />
           <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
             <span class="text-white text-lg font-semibold">View on Instagram</span>
           </div>

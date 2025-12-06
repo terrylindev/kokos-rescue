@@ -3,7 +3,6 @@ import { loadQuery } from "../sanity/lib/load-query";
 import { urlForImage } from "../sanity/lib/urlForImage";
 import Layout from "../layouts/Layout.astro";
 import Cat from "../components/Cat.astro";
-import OurText from "../components/OurText.astro";
 import Button from "../components/Button.astro";
 
 interface CatPhoto {
@@ -17,35 +16,23 @@ interface Cat {
   age: string;
   gender: string;
   description: string;
-  photo?: CatPhoto;      // Legacy single photo field
-  photos?: CatPhoto[];   // New multiple photos field
+  photos: CatPhoto[];
   instagramLink: string;
 }
 
-// Helper function to get all photos for a cat (supports both old and new format)
+// Helper function to get all photo URLs for a cat
 function getCatPhotoUrls(cat: Cat): string[] {
-  const photoUrls: string[] = [];
-  
-  // First, add photos from the new array field
-  if (cat.photos && cat.photos.length > 0) {
-    cat.photos.forEach(photo => {
-      photoUrls.push(urlForImage(photo).width(400).height(400).url());
-    });
+  if (!cat.photos || cat.photos.length === 0) {
+    return [];
   }
-  
-  // If no photos array, fall back to legacy single photo
-  if (photoUrls.length === 0 && cat.photo) {
-    photoUrls.push(urlForImage(cat.photo).width(400).height(400).url());
-  }
-  
-  return photoUrls;
+  return cat.photos.map(photo => urlForImage(photo).width(400).height(400).url());
 }
 
 let cats: Cat[] = [];
 
 try {
   const { data } = await loadQuery<Cat[]>({
-    query: `*[_type == "cat"]{name, age, gender, description, photo, photos, instagramLink}`,
+    query: `*[_type == "cat"]{name, age, gender, description, photos, instagramLink}`,
   });
 
   cats = data || [];
@@ -54,9 +41,9 @@ try {
 }
 ---
 
-<Layout title="Our Cats">
+<Layout title="Our Cats" description="Meet our adorable cats waiting for their forever homes. Browse available cats for adoption at Koko's Rescue NYC.">
   <!-- Hero Banner -->
-  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-16">
+  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-16 paw-pattern-bg">
     <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
       <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
         Our Cats
@@ -226,29 +213,6 @@ try {
   .filter-btn.active {
     background-color: var(--primary-color);
     color: white;
-  }
-
-  .bg-gradient-to-r {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .bg-gradient-to-r::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("/images/paw-pattern.svg");
-    background-size: 200px;
-    opacity: 0.05;
-    z-index: 0;
-  }
-
-  .bg-gradient-to-r > * {
-    position: relative;
-    z-index: 1;
   }
 </style>
 

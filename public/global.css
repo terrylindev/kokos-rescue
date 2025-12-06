@@ -103,6 +103,36 @@ body {
   box-shadow: 4px 4px 0px rgba(74, 74, 58, 0.7);
 }
 
+/* Paw Pattern Background */
+.paw-pattern-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.paw-pattern-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/images/paw-pattern.svg");
+  background-size: 200px;
+  opacity: 0.05;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.paw-pattern-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pattern-paw {
+  background-image: url("/images/paw-pattern.svg");
+  background-size: 200px;
+}
+
 /* Custom animations */
 @keyframes fadeIn {
   from {
@@ -113,6 +143,21 @@ body {
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .fade-in {
   animation: fadeIn 0.8s ease-out;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
 }

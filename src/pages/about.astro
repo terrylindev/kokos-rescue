@@ -8,20 +8,29 @@ interface AboutData {
   content: string;
 }
 
-// Fetch about page data from Sanity
-const { data: aboutData } = await loadQuery<AboutData>({
-  query: `*[_type == "about"][0]{content}`,
-});
+// Default content fallback
+let content = "Koko's Rescue is dedicated to saving and rehoming cats in need throughout New York City.";
 
-const { content } = aboutData;
+// Fetch about page data from Sanity
+try {
+  const { data: aboutData } = await loadQuery<AboutData>({
+    query: `*[_type == "about"][0]{content}`,
+  });
+  
+  if (aboutData?.content) {
+    content = aboutData.content;
+  }
+} catch (error) {
+  console.error("Failed to load about page data:", error);
+}
 
 // Split content into paragraphs
 const paragraphs = content.split("\n");
 ---
 
-<Layout title="About Us">
+<Layout title="About Us" description="Learn about Koko's Rescue, our mission to save and rehome cats in NYC, and how we help cats find their forever homes.">
   <!-- Hero Section -->
-  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-16">
+  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-16 paw-pattern-bg">
     <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
       <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
         About Us
@@ -304,48 +313,8 @@ const paragraphs = content.split("\n");
 </Layout>
 
 <style>
-  /* Custom animations */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   section {
-    animation: fadeIn 0.8s ease-out;
-  }
-
-  .bg-gradient-to-r {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .bg-gradient-to-r::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("/images/paw-pattern.svg");
-    background-size: 200px;
-    opacity: 0.05;
-    z-index: 0;
-  }
-
-  .bg-gradient-to-r > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  .pattern-paw {
-    background-image: url("/images/paw-pattern.svg");
-    background-size: 200px;
+    animation: fadeInUp 0.8s ease-out;
   }
 
   /* Additional heading styles */
