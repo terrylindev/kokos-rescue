@@ -6,24 +6,46 @@ import Cat from "../components/Cat.astro";
 import OurText from "../components/OurText.astro";
 import Button from "../components/Button.astro";
 
+interface CatPhoto {
+  asset: {
+    _ref: string;
+  };
+}
+
 interface Cat {
   name: string;
   age: string;
   gender: string;
   description: string;
-  photo: {
-    asset: {
-      _ref: string;
-    };
-  };
+  photo?: CatPhoto;      // Legacy single photo field
+  photos?: CatPhoto[];   // New multiple photos field
   instagramLink: string;
+}
+
+// Helper function to get all photos for a cat (supports both old and new format)
+function getCatPhotoUrls(cat: Cat): string[] {
+  const photoUrls: string[] = [];
+  
+  // First, add photos from the new array field
+  if (cat.photos && cat.photos.length > 0) {
+    cat.photos.forEach(photo => {
+      photoUrls.push(urlForImage(photo).width(400).height(400).url());
+    });
+  }
+  
+  // If no photos array, fall back to legacy single photo
+  if (photoUrls.length === 0 && cat.photo) {
+    photoUrls.push(urlForImage(cat.photo).width(400).height(400).url());
+  }
+  
+  return photoUrls;
 }
 
 let cats: Cat[] = [];
 
 try {
   const { data } = await loadQuery<Cat[]>({
-    query: `*[_type == "cat"]{name, age, gender, description, photo, instagramLink}`,
+    query: `*[_type == "cat"]{name, age, gender, description, photo, photos, instagramLink}`,
   });
 
   cats = data || [];
@@ -166,7 +188,7 @@ try {
                 age={cat.age}
                 gender={cat.gender}
                 description={cat.description}
-                photoUrl={urlForImage(cat.photo).width(400).height(300).url()}
+                photoUrls={getCatPhotoUrls(cat)}
                 instagramLink={cat.instagramLink}
               />
             </div>

@@ -5,37 +5,80 @@ interface Props {
   age: string;
   gender: string;
   description: string;
-  photoUrl: string;
+  photoUrls: string[];
   instagramLink: string;
 }
 
 // Extract props
-const { name, age, gender, description, photoUrl, instagramLink } = Astro.props;
+const { name, age, gender, description, photoUrls, instagramLink } = Astro.props;
 
 // Process data
 const genderImage = "/images/icons8-" + gender + ".webp";
 const paragraphs = description
   ? description.split("\n")
   : [`${name} is amazing!`];
+
+// Generate unique ID for this carousel
+const carouselId = `carousel-${name.toLowerCase().replace(/\s+/g, '-')}-${Math.random().toString(36).substring(2, 9)}`;
+const hasMultiplePhotos = photoUrls.length > 1;
 ---
 
 <div class="rounded-md max-w-md mx-auto shadow-card overflow-hidden bg-gray-50">
-  <!-- Instagram Link with Photo -->
-  <a
-    href={instagramLink}
-    target="_blank"
-    rel="noopener noreferrer"
-    class="block relative"
-  >
-    <div class="aspect-square overflow-hidden">
-      <img src={photoUrl} alt={name} class="w-full h-full object-cover" />
+  <!-- Photo Carousel -->
+  <div class="relative" id={carouselId}>
+    <div class="aspect-square overflow-hidden relative">
+      {photoUrls.map((url, index) => (
+        <a
+          href={instagramLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class={`carousel-slide absolute inset-0 transition-opacity duration-300 ${index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          data-index={index}
+        >
+          <img src={url} alt={`${name} - Photo ${index + 1}`} class="w-full h-full object-cover" />
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+            <span class="text-white text-lg font-semibold">View on Instagram</span>
+          </div>
+        </a>
+      ))}
     </div>
-    <div
-      class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300"
-    >
-      <span class="text-white text-lg font-semibold">View on Instagram</span>
-    </div>
-  </a>
+    
+    {hasMultiplePhotos && (
+      <>
+        <!-- Navigation Arrows -->
+        <button
+          type="button"
+          class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md transition-all duration-200 z-10"
+          aria-label="Previous photo"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md transition-all duration-200 z-10"
+          aria-label="Next photo"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        
+        <!-- Dot Indicators -->
+        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {photoUrls.map((_, index) => (
+            <button
+              type="button"
+              class={`carousel-dot w-2 h-2 rounded-full transition-all duration-200 ${index === 0 ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'}`}
+              data-index={index}
+              aria-label={`Go to photo ${index + 1}`}
+            />
+          ))}
+        </div>
+      </>
+    )}
+  </div>
 
   <!-- Content Area -->
   <div class="p-6">
@@ -68,3 +111,79 @@ const paragraphs = description
     </div>
   </div>
 </div>
+
+<script>
+  // Initialize all carousels on the page
+  function initCarousels() {
+    const carousels = document.querySelectorAll('[id^="carousel-"]');
+    
+    carousels.forEach((carousel) => {
+      const slides = carousel.querySelectorAll<HTMLElement>('.carousel-slide');
+      const dots = carousel.querySelectorAll<HTMLElement>('.carousel-dot');
+      const prevBtn = carousel.querySelector('.carousel-prev');
+      const nextBtn = carousel.querySelector('.carousel-next');
+      
+      if (slides.length <= 1) return;
+      
+      let currentIndex = 0;
+      
+      function showSlide(index: number) {
+        // Handle wrapping
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+        
+        currentIndex = index;
+        
+        // Update slides
+        slides.forEach((slide, i) => {
+          if (i === currentIndex) {
+            slide.classList.remove('opacity-0', 'pointer-events-none');
+            slide.classList.add('opacity-100');
+          } else {
+            slide.classList.add('opacity-0', 'pointer-events-none');
+            slide.classList.remove('opacity-100');
+          }
+        });
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+          if (i === currentIndex) {
+            dot.classList.remove('bg-white/50');
+            dot.classList.add('bg-white', 'scale-125');
+          } else {
+            dot.classList.add('bg-white/50');
+            dot.classList.remove('bg-white', 'scale-125');
+          }
+        });
+      }
+      
+      // Navigation buttons
+      prevBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        showSlide(currentIndex - 1);
+      });
+      
+      nextBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        showSlide(currentIndex + 1);
+      });
+      
+      // Dot indicators
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          showSlide(index);
+        });
+      });
+    });
+  }
+  
+  // Initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', initCarousels);
+  
+  // Re-initialize if using View Transitions
+  document.addEventListener('astro:page-load', initCarousels);
+</script>
