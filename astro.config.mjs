@@ -27,6 +27,7 @@ export default defineConfig({
     react(),
     sitemap({
       filter: (page) => !page.includes('/studio/') && !page.includes('/faq'),
+      customPages: [],
     }),
   ],
   output: "static",
