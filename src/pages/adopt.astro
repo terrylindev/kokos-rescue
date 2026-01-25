@@ -39,12 +39,12 @@ const { data: formUrl } = await loadQuery<{ formUrl: string }>({
 
 <Layout title="Adopt a Cat">
   <!-- Hero Section -->
-  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-16">
+  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-8 md:py-12">
     <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 text-gray-800">
         Adoption Process
       </h1>
-      <p class="text-xl max-w-3xl mx-auto mb-8 text-gray-700">
+      <p class="text-base md:text-lg lg:text-xl max-w-3xl mx-auto mb-4 md:mb-6 text-gray-700">
         Take home a furry friend and start a lifetime of love and companionship.
       </p>
       <div class="flex justify-center">
@@ -58,18 +58,18 @@ const { data: formUrl } = await loadQuery<{ formUrl: string }>({
     </div>
   </div>
 
-  <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
     <!-- Introduction Section -->
-    <div class="bg-white rounded-xl shadow-md p-8 mb-12">
-      <div class="flex flex-col md:flex-row items-center gap-8">
+    <div class="bg-white rounded-xl shadow-md p-5 md:p-8 mb-8 md:mb-12">
+      <div class="flex flex-col md:flex-row items-center gap-5 md:gap-8">
         <div class="md:w-1/2">
-          <h2 class="text-3xl font-bold mb-4 text-gray-800">Why Adopt?</h2>
-          <p class="text-gray-700 mb-4">
+          <h2 class="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-gray-800">Why Adopt?</h2>
+          <p class="text-gray-700 text-sm md:text-base mb-3 md:mb-4">
             When you adopt a cat from Koko's Rescue, you're giving a second
             chance to a cat in need. Our cats have been rescued, rehabilitated,
             and are now ready for their forever homes.
           </p>
-          <p class="text-gray-700">
+          <p class="text-gray-700 text-sm md:text-base">
             Each adoption helps us continue our mission of rescuing more cats
             and providing them with the care they need until they find loving
             homes.
@@ -86,11 +86,11 @@ const { data: formUrl } = await loadQuery<{ formUrl: string }>({
     </div>
 
     <!-- Process Steps Section -->
-    <div class="mb-16">
-      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+    <div class="mb-10 md:mb-16">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-10 text-gray-800">
         Adoption Process
       </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8">
         <InfoCard
           icon="/images/icons8-requirement.webp"
           title={adoptionItem1.title}
@@ -114,17 +114,17 @@ const { data: formUrl } = await loadQuery<{ formUrl: string }>({
 
     <!-- Medical Care Section -->
     <div
-      class="bg-gradient-to-r from-beige-100 to-beige-200 rounded-xl p-8 mb-16"
+      class="bg-gradient-to-r from-beige-100 to-beige-200 rounded-xl p-5 md:p-8 mb-10 md:mb-16"
     >
-      <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-8 text-gray-800">
         Complete Medical Care
       </h2>
-      <p class="text-center text-lg mb-8 text-gray-700">
+      <p class="text-center text-sm md:text-base lg:text-lg mb-6 md:mb-8 text-gray-700">
         Every cat adopted from Koko's Rescue receives comprehensive medical
         care:
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
         <InfoCard
           icon="/images/icons8-drug.webp"
           title={adoptionItem4.title}
@@ -140,41 +140,28 @@ const { data: formUrl } = await loadQuery<{ formUrl: string }>({
       </div>
     </div>
 
-    <!-- Success Stories Link Section -->
-    <div class="bg-white rounded-xl shadow-md p-8 mb-16 text-center">
-      <h2 class="text-3xl font-bold mb-4 text-gray-800">
-        Adoption Success Stories
-      </h2>
-      <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
-        Read heartwarming stories from families who have adopted from Koko's
-        Rescue and how these cats have changed their lives for the better.
-      </p>
-      <Button
-        label="Read Success Stories"
-        href="/success-stories"
-        variant="primary"
-        size="medium"
-      />
-    </div>
-
-    <!-- FAQ Link Section -->
-    <div class="bg-white rounded-xl shadow-md p-8 mb-16 text-center">
-      <h2 class="text-3xl font-bold mb-4 text-gray-800">Have Questions?</h2>
-      <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
-        Find answers to common questions about the adoption process,
-        requirements, and what to expect.
-      </p>
-      <Button
-        label="View FAQs"
-        href="/faq#adoption"
-        variant="primary"
-        size="medium"
-      />
-    </div>
-
     <!-- Application Form Section with ID for scroll target -->
     <div id="application-form">
       <ApplicationCard title="Adoption" formUrl={formUrl.formUrl} />
+    </div>
+
+    <!-- Success Stories Callout - after application -->
+    <div class="mt-12 bg-gradient-to-r from-olive-50 to-beige-100 rounded-xl p-6 border border-olive-200">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <span class="text-4xl">🐱</span>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800">See Our Happy Adoptions</h3>
+            <p class="text-sm text-gray-600">Read heartwarming stories from families who've adopted from us.</p>
+          </div>
+        </div>
+        <Button
+          label="Success Stories"
+          href="/success-stories"
+          variant="secondary"
+          size="medium"
+        />
+      </div>
     </div>
   </div>
 </Layout>

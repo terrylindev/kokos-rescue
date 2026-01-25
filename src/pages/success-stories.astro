@@ -121,67 +121,92 @@ const displayedFosterStories =
 
 <Layout title="Success Stories">
   <!-- Hero Section -->
-  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-16">
+  <div class="bg-gradient-to-r from-beige-100 to-beige-200 py-8 md:py-12">
     <div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 text-gray-800">
         Success Stories
       </h1>
-      <p class="text-xl max-w-3xl mx-auto mb-8 text-gray-700">
+      <p class="text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-gray-700">
         Every cat has a story. Here are some of the happy endings our adopters
         and fosters have helped create.
       </p>
     </div>
   </div>
 
-  <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
     <!-- Adoption Success Stories -->
-    <section class="mb-16">
-      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+    <section class="mb-10 md:mb-16">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-8 text-gray-800">
         Adoption Success Stories
       </h2>
-      <p class="text-center text-lg mb-8 text-gray-700">
+      <p class="text-center text-sm md:text-base lg:text-lg mb-6 md:mb-8 text-gray-700">
         These cats found their forever homes thanks to our wonderful adopters.
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
         {
-          displayedAdoptionStories.map((story) => (
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
-              <div class="aspect-square bg-gray-200 flex items-center justify-center">
+          displayedAdoptionStories.map((story, index) => (
+            <div class="story-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+              <!-- Photo Section - 16:10 aspect ratio -->
+              <div class="relative aspect-[16/10] bg-olive-50 overflow-hidden">
                 {story.photo ? (
                   <img
-                    src={urlForImage(story.photo).width(400).height(400).url()}
+                    src={urlForImage(story.photo).width(400).height(250).url()}
                     alt={story.name}
                     class="w-full h-full object-cover"
                   />
                 ) : (
-                  <img
-                    src="/images/cat-footer.svg"
-                    alt={story.name}
-                    class="h-32"
-                  />
-                )}
-              </div>
-              <div class="p-6">
-                <div class="flex items-center mb-4">
-                  <div
-                    class={`w-12 h-12 bg-${story.color}-100 rounded-full flex items-center justify-center mr-4`}
-                  >
-                    <span class={`text-${story.color}-500 text-xl font-bold`}>
-                      {story.initial}
-                    </span>
+                  <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-olive-100 to-beige-100">
+                    <img
+                      src="/images/cat-footer.svg"
+                      alt={story.name}
+                      class="h-20 opacity-60"
+                    />
                   </div>
-                  <div>
-                    <h3 class="font-bold text-gray-800">{story.name}</h3>
-                    <p class="text-gray-600 text-sm">
-                      {story.type === "adoption" ? "Adopted " : ""}
-                      {story.time}
+                )}
+                <!-- Time badge -->
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-olive-700 text-xs font-medium px-2.5 py-1 rounded-full">
+                  {story.time}
+                </div>
+              </div>
+              
+              <!-- Content -->
+              <div class="p-5 flex-1 flex flex-col">
+                <!-- Name -->
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 bg-olive-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-olive-700 text-lg font-bold">{story.initial}</span>
+                  </div>
+                  <h3 class="font-bold text-gray-800 text-lg">{story.name}</h3>
+                </div>
+                
+                <!-- Story with quote styling -->
+                <div class="flex-1">
+                  <div class="relative">
+                    <svg class="absolute -top-1 -left-1 w-6 h-6 text-olive-200" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    </svg>
+                    <p 
+                      class="story-text text-gray-600 text-sm leading-relaxed pl-5 italic"
+                      data-expanded="false"
+                      data-story-id={`adoption-${index}`}
+                    >
+                      {story.story}
                     </p>
                   </div>
+                  {story.story.length > 150 && (
+                    <button 
+                      type="button"
+                      class="read-more-btn text-olive-600 hover:text-olive-800 text-sm font-medium mt-2 flex items-center gap-1 transition-colors"
+                      data-target={`adoption-${index}`}
+                    >
+                      <span class="btn-text">Read more</span>
+                      <svg class="btn-icon w-4 h-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  )}
                 </div>
-                <p class="story-description text-gray-700 italic">
-                  "{story.story}"
-                </p>
               </div>
             </div>
           ))
@@ -199,53 +224,78 @@ const displayedFosterStories =
     </section>
 
     <!-- Foster Success Stories -->
-    <section class="mb-16">
-      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
+    <section class="mb-10 md:mb-16">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-8 text-gray-800">
         Foster Success Stories
       </h2>
-      <p class="text-center text-lg mb-8 text-gray-700">
+      <p class="text-center text-sm md:text-base lg:text-lg mb-6 md:mb-8 text-gray-700">
         Our foster parents make rescue possible. Here are their experiences.
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
         {
-          displayedFosterStories.map((story) => (
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
-              <div class="aspect-square bg-gray-200 flex items-center justify-center">
+          displayedFosterStories.map((story, index) => (
+            <div class="story-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+              <!-- Photo Section - 16:10 aspect ratio -->
+              <div class="relative aspect-[16/10] bg-olive-50 overflow-hidden">
                 {story.photo ? (
                   <img
-                    src={urlForImage(story.photo).width(400).height(400).url()}
+                    src={urlForImage(story.photo).width(400).height(250).url()}
                     alt={story.name}
                     class="w-full h-full object-cover"
                   />
                 ) : (
-                  <img
-                    src="/images/cat-footer.svg"
-                    alt={story.name}
-                    class="h-32"
-                  />
-                )}
-              </div>
-              <div class="p-6">
-                <div class="flex items-center mb-4">
-                  <div
-                    class={`w-12 h-12 bg-${story.color}-100 rounded-full flex items-center justify-center mr-4`}
-                  >
-                    <span class={`text-${story.color}-500 text-xl font-bold`}>
-                      {story.initial}
-                    </span>
+                  <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-olive-100 to-beige-100">
+                    <img
+                      src="/images/playful-cat.svg"
+                      alt={story.name}
+                      class="h-20 opacity-60"
+                    />
                   </div>
-                  <div>
-                    <h3 class="font-bold text-gray-800">{story.name}</h3>
-                    <p class="text-gray-600 text-sm">
-                      {story.type === "foster" ? "Fostered " : ""}
-                      {story.time}
+                )}
+                <!-- Time badge -->
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-olive-700 text-xs font-medium px-2.5 py-1 rounded-full">
+                  {story.time}
+                </div>
+              </div>
+              
+              <!-- Content -->
+              <div class="p-5 flex-1 flex flex-col">
+                <!-- Name -->
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 bg-olive-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-olive-700 text-lg font-bold">{story.initial}</span>
+                  </div>
+                  <h3 class="font-bold text-gray-800 text-lg">{story.name}</h3>
+                </div>
+                
+                <!-- Story with quote styling -->
+                <div class="flex-1">
+                  <div class="relative">
+                    <svg class="absolute -top-1 -left-1 w-6 h-6 text-olive-200" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    </svg>
+                    <p 
+                      class="story-text text-gray-600 text-sm leading-relaxed pl-5 italic"
+                      data-expanded="false"
+                      data-story-id={`foster-${index}`}
+                    >
+                      {story.story}
                     </p>
                   </div>
+                  {story.story.length > 150 && (
+                    <button 
+                      type="button"
+                      class="read-more-btn text-olive-600 hover:text-olive-800 text-sm font-medium mt-2 flex items-center gap-1 transition-colors"
+                      data-target={`foster-${index}`}
+                    >
+                      <span class="btn-text">Read more</span>
+                      <svg class="btn-icon w-4 h-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  )}
                 </div>
-                <p class="story-description text-gray-700 italic">
-                  "{story.story}"
-                </p>
               </div>
             </div>
           ))
@@ -264,10 +314,10 @@ const displayedFosterStories =
 
     <!-- Share Your Story Section -->
     <section
-      class="bg-gradient-to-r from-olive-100 to-olive-200 rounded-xl p-8 text-center mb-16"
+      class="bg-gradient-to-r from-olive-100 to-olive-200 rounded-xl p-5 md:p-8 text-center mb-10 md:mb-16"
     >
-      <h2 class="text-3xl font-bold mb-4 text-gray-800">Share Your Story</h2>
-      <p class="text-lg mb-6 text-gray-700 max-w-2xl mx-auto">
+      <h2 class="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-gray-800">Share Your Story</h2>
+      <p class="text-sm md:text-base lg:text-lg mb-4 md:mb-6 text-gray-700 max-w-2xl mx-auto">
         Have you adopted or fostered a cat from Koko's Rescue? We'd love to hear
         about your experience and possibly feature your story on our website!
       </p>
@@ -283,15 +333,15 @@ const displayedFosterStories =
 
 <style>
   /* Card hover effects */
-  .bg-white.rounded-xl {
+  .story-card {
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease;
   }
 
-  .bg-white.rounded-xl:hover {
+  .story-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px -5px rgba(90, 107, 70, 0.15);
   }
 
   .bg-gradient-to-r {
@@ -317,27 +367,46 @@ const displayedFosterStories =
     z-index: 1;
   }
 
-  /* Story description scroll styles */
-  .story-description {
-    max-height: 150px;
-    overflow-y: auto;
-    padding-right: 5px;
-    /* Subtle scrollbar styling */
-    scrollbar-width: thin;
-    scrollbar-color: #d1d5db transparent;
+  /* Expandable story text */
+  .story-text[data-expanded="false"] {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
-
-  /* Webkit scrollbar styling for Chrome, Safari, etc. */
-  .story-description::-webkit-scrollbar {
-    width: 4px;
+  
+  .story-text[data-expanded="true"] {
+    display: block;
   }
-
-  .story-description::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .story-description::-webkit-scrollbar-thumb {
-    background-color: #d1d5db;
-    border-radius: 4px;
+  
+  .read-more-btn[data-expanded="true"] .btn-icon {
+    transform: rotate(180deg);
   }
 </style>
+
+<script>
+  function initStoryExpanders() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.read-more-btn');
+    
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        const storyText = document.querySelector<HTMLElement>(`[data-story-id="${targetId}"]`);
+        const btnText = btn.querySelector<HTMLElement>('.btn-text');
+        
+        if (!storyText) return;
+        
+        const isExpanded = storyText.getAttribute('data-expanded') === 'true';
+        storyText.setAttribute('data-expanded', (!isExpanded).toString());
+        btn.setAttribute('data-expanded', (!isExpanded).toString());
+        
+        if (btnText) {
+          btnText.textContent = isExpanded ? 'Read more' : 'Show less';
+        }
+      });
+    });
+  }
+  
+  document.addEventListener('DOMContentLoaded', initStoryExpanders);
+  document.addEventListener('astro:page-load', initStoryExpanders);
+</script>

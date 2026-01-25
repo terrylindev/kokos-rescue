@@ -10,11 +10,11 @@ const { icon, title, bulletPoints, className } = Astro.props;
 ---
 
 <div
-  class={`bg-white rounded-md py-4 px-6 flex flex-col items-center sm:items-start space-y-2 ${className}`}
+  class={`bg-white rounded-md py-3 px-4 md:py-4 md:px-6 flex flex-col items-center sm:items-start space-y-2 ${className}`}
 >
-  <img src={icon} alt={title + " icon"} class="h-10 w-10 object-contain" />
-  <h3 class="text-lg font-bold text-gray-800">{title}</h3>
-  <ul class="list-disc list-inside text-gray-700 space-y-1">
+  <img src={icon} alt={title + " icon"} class="h-8 w-8 md:h-10 md:w-10 object-contain" />
+  <h3 class="text-base md:text-lg font-bold text-gray-800">{title}</h3>
+  <ul class="list-disc list-inside text-gray-700 space-y-1 text-sm md:text-base">
     {bulletPoints.map((point) => <li>{point}</li>)}
   </ul>
 </div>

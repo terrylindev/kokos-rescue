@@ -1,128 +1,169 @@
 ---
 const currentPath = Astro.url.pathname;
 
-// Define navigation items for easier management
+// Define navigation items with icons for mobile
 const navItems = [
-  { path: "/", label: "Home" },
-  { path: "/about/", label: "About" },
-  { path: "/cats/", label: "Cats" },
-  { path: "/adopt/", label: "Adopt" },
-  { path: "/foster/", label: "Foster" },
-  { path: "/success-stories/", label: "Success Stories" },
-  { path: "/faq/", label: "FAQ" },
-  { path: "/contact/", label: "Contact" },
+  { path: "/", label: "Home", icon: "🏠" },
+  { path: "/about/", label: "About", icon: "ℹ️" },
+  { path: "/cats/", label: "Our Cats", icon: "🐱" },
+  { path: "/adopt/", label: "Adopt", icon: "💝" },
+  { path: "/foster/", label: "Foster", icon: "🏡" },
+  { path: "/success-stories/", label: "Success Stories", icon: "⭐" },
+  { path: "/contact/", label: "Contact", icon: "✉️" },
 ];
 ---
 
-<nav>
-  <ul
-    class="flex flex-col md:flex-row md:items-center md:justify-center text-base font-medium py-0 md:px-0 gap-1 md:gap-2"
-  >
+<nav class="nav-container h-full md:h-auto flex items-center">
+  <ul class="nav-list flex flex-col md:flex-row md:items-center md:justify-center w-full md:w-auto gap-1 md:gap-1">
     {
-      navItems.map((item) => (
-        <li class="nav-item flex">
+      navItems.map((item, index) => (
+        <li class="nav-item" style={`--delay: ${index * 50}ms`}>
           <a
             href={item.path}
-            class={`nav-link w-full ${currentPath === item.path ? "active" : ""}`}
+            class={`nav-link group ${currentPath === item.path ? "active" : ""}`}
           >
-            {item.label}
+            <span class="nav-icon md:hidden">{item.icon}</span>
+            <span class="nav-label">{item.label}</span>
+            <span class="nav-indicator"></span>
           </a>
         </li>
       ))
     }
+    
+    <!-- Mobile donate button -->
+    <li class="nav-item mt-6 md:hidden" style="--delay: 350ms">
+      <a href="/donate" class="mobile-donate-btn">
+        <span>💖</span>
+        <span>Donate Now</span>
+      </a>
+    </li>
   </ul>
 </nav>
 
 <style>
-  .nav-item {
-    display: flex;
-    align-items: stretch;
-  }
-
-  .nav-link {
-    color: #4a4a3a;
-    padding: 8px 12px;
-    border-radius: 3px;
-    position: relative;
-    text-align: center;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-  }
-
-  .nav-link:hover,
-  .nav-link.active {
-    color: #5a6b46;
-    background-color: #e8e3d5;
-  }
-
-  /* Add the underline effect */
-  .nav-link::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0;
+  .nav-container {
     width: 100%;
-    height: 2px;
-    background-color: transparent;
-    transition: background-color 0.3s ease;
   }
-
-  .nav-link:hover::after,
-  .nav-link.active::after {
-    background-color: #5a6b46;
-  }
-
-  /* Centering the menu items */
-  #nav-menu ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  
+  .nav-list {
+    list-style: none;
     padding: 0;
     margin: 0;
-    list-style: none;
   }
-
-  #nav-menu {
+  
+  .nav-item {
+    animation: slideIn 0.4s ease-out backwards;
+    animation-delay: var(--delay);
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .nav-link {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    color: #4a5a3a;
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-icon {
+    font-size: 1.25rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .nav-link:hover .nav-icon,
+  .nav-link.active .nav-icon {
+    transform: scale(1.15);
+  }
+  
+  .nav-indicator {
+    display: none;
+  }
+  
+  .nav-link:hover,
+  .nav-link:focus {
+    color: #5a6b46;
+    background-color: rgba(90, 107, 70, 0.08);
+  }
+  
+  .nav-link.active {
+    color: #5a6b46;
+    background-color: rgba(90, 107, 70, 0.12);
+    font-weight: 600;
+  }
+  
+  .mobile-donate-btn {
+    display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #5a6b46 0%, #7b8d69 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(90, 107, 70, 0.3);
   }
-
-  /* Medium and above screens */
+  
+  .mobile-donate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(90, 107, 70, 0.4);
+  }
+  
+  /* Desktop styles */
   @media (min-width: 768px) {
+    .nav-item {
+      animation: none;
+    }
+    
     .nav-link {
-      padding: 8px 12px;
+      padding: 0.5rem 0.875rem;
+      font-size: 0.875rem;
+      border-radius: 0.375rem;
     }
-
+    
+    .nav-indicator {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #5a6b46, #7b8d69);
+      border-radius: 1px;
+      transform: translateX(-50%);
+      transition: width 0.2s ease;
+    }
+    
+    .nav-link:hover .nav-indicator,
+    .nav-link.active .nav-indicator {
+      width: 70%;
+    }
+    
     .nav-link:hover,
+    .nav-link:focus {
+      background-color: transparent;
+    }
+    
     .nav-link.active {
-      background-color: #e8e3d5;
-      color: #5a6b46;
-      border-radius: 3px;
-    }
-
-    .nav-link::after {
-      bottom: -2px;
-    }
-
-    #nav-menu ul {
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #nav-menu {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
+      background-color: transparent;
     }
   }
 </style>

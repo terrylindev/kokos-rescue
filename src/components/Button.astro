@@ -3,9 +3,10 @@ interface Props {
   label: string;
   href?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "outline";
   size?: "small" | "medium" | "large";
   blank?: boolean;
+  icon?: "arrow" | "heart" | "paw" | null;
 }
 
 const {
@@ -15,20 +16,23 @@ const {
   variant = "primary",
   size = "medium",
   blank = false,
+  icon = null,
 } = Astro.props;
 
 const baseClasses =
-  "inline-block rounded-md font-medium transition-transform transform hover:scale-105 border border-olive-900";
+  "btn inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-olive-500";
 const sizeClasses =
   size === "small"
     ? "px-4 py-2 text-sm"
     : size === "large"
-      ? "px-8 py-4 text-lg"
-      : "px-6 py-3";
+      ? "px-8 py-3.5 text-base"
+      : "px-6 py-3 text-sm";
 const variantClasses =
   variant === "secondary"
-    ? "bg-secondary text-secondary hover:bg-secondary-hover"
-    : "bg-primary text-white hover:bg-primary-hover";
+    ? "btn-secondary bg-beige-100 text-olive-800 hover:bg-beige-200 border-2 border-olive-200 hover:border-olive-300"
+    : variant === "outline"
+      ? "btn-outline bg-transparent text-olive-700 border-2 border-olive-400 hover:bg-olive-50 hover:border-olive-500"
+      : "btn-primary bg-olive-700 text-white hover:bg-olive-800 border-2 border-olive-700 hover:border-olive-800";
 const classes = `${baseClasses} ${sizeClasses} ${variantClasses}`;
 ---
 
@@ -38,37 +42,83 @@ const classes = `${baseClasses} ${sizeClasses} ${variantClasses}`;
       href={href}
       target={blank ? "_blank" : "_self"}
       rel={blank ? "noopener noreferrer" : ""}
-      class={classes + " shadow-button"}
+      class={classes}
     >
-      {label}
+      <span>{label}</span>
+      {icon === "arrow" && (
+        <svg class="btn-icon w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      )}
+      {icon === "heart" && (
+        <svg class="btn-icon w-4 h-4 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      )}
+      {icon === "paw" && (
+        <span class="btn-icon text-base transition-transform duration-300">🐾</span>
+      )}
     </a>
   ) : (
-    <button type={type} class={classes + " shadow-button"}>
-      {label}
+    <button type={type} class={classes}>
+      <span>{label}</span>
+      {icon === "arrow" && (
+        <svg class="btn-icon w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      )}
+      {icon === "heart" && (
+        <svg class="btn-icon w-4 h-4 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      )}
+      {icon === "paw" && (
+        <span class="btn-icon text-base transition-transform duration-300">🐾</span>
+      )}
     </button>
   )
 }
 
 <style>
-  .bg-primary {
-    background-color: #5a6b46;
+  .btn {
+    position: relative;
+    overflow: hidden;
   }
-  .bg-secondary {
-    background-color: #f5f2e9;
+  
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
   }
-  .hover\:bg-primary-hover:hover {
-    background-color: #4a5a3a;
+  
+  .btn:hover::before {
+    left: 100%;
   }
-  .hover\:bg-secondary-hover:hover {
-    background-color: #e8e3d5;
+  
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 107, 70, 0.25);
   }
-  .text-primary {
-    color: #f5f2e9;
+  
+  .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(90, 107, 70, 0.2);
   }
-  .text-secondary {
-    color: #5a6b46;
+  
+  .btn:hover .btn-icon {
+    transform: translateX(3px);
   }
-  .shadow-button {
-    box-shadow: 4px 4px 0px rgba(74, 74, 58, 0.7);
+  
+  .btn-primary:hover {
+    box-shadow: 0 4px 14px rgba(90, 107, 70, 0.4);
+  }
+  
+  .btn-secondary:hover {
+    box-shadow: 0 4px 12px rgba(90, 107, 70, 0.15);
   }
 </style>

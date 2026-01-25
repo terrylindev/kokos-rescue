@@ -80,13 +80,6 @@ const currentYear = new Date().getFullYear();
           </li>
           <li>
             <a
-              href="/faq"
-              class="text-sm hover:underline transition-colors hover:text-beige-200"
-              >FAQ</a
-            >
-          </li>
-          <li>
-            <a
               href="/donate"
               class="text-sm hover:underline transition-colors hover:text-beige-200"
               >Donate</a
@@ -195,11 +188,24 @@ const currentYear = new Date().getFullYear();
       <p class="text-sm opacity-90 mb-2 sm:mb-0">
         &copy; {currentYear} Koko's Rescue. All rights reserved.
       </p>
-      <div class="flex space-x-4">
+      <div class="flex items-center space-x-4">
         <a href="/about" class="text-xs hover:underline">About Us</a>
         <a href="/contact" class="text-xs hover:underline">Contact</a>
-        <a href="/donate" class="text-xs hover:underline">Support Our Mission</a
+        <a href="/donate" class="text-xs hover:underline">Support Our Mission</a>
+        <a
+          href="https://github.com/terrylindev/kokos-rescue"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center bg-beige-100 text-olive-700 px-3 py-1 rounded-full font-medium hover:bg-beige-200 transition-colors"
+          aria-label="View source on GitHub"
         >
+          <img
+            src="/images/icons8-github-32.png"
+            alt="GitHub"
+            class="h-5 w-5"
+          />
+          <span class="text-xs font-medium">GitHub</span>
+        </a>
       </div>
     </div>
   </div>

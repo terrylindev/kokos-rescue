@@ -1,11 +1,21 @@
 <a
   href="/donate"
-  class="flex items-center px-4 py-2 rounded-full bg-orange-600 text-white font-bold shadow-md transform transition-all duration-300 hover:bg-amber-600 hover:scale-105 hover:shadow-lg"
+  class="donate-btn flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-olive-600 to-olive-700 text-beige-100 font-semibold shadow-md transform transition-all duration-300 hover:from-olive-700 hover:to-olive-800 hover:scale-105 hover:shadow-lg border border-olive-500"
 >
-  <span class="mr-2">DONATE</span>
-  <img
-    src="/images/icons8-donate-48.png"
-    alt="Donate"
-    class="w-6 h-6 filter brightness-0 invert"
-  />
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>
+  <span>Donate</span>
 </a>
+
+<style>
+  .donate-btn {
+    background: linear-gradient(135deg, #5a6b46 0%, #4a5a3a 100%);
+    box-shadow: 0 2px 8px rgba(90, 107, 70, 0.3);
+  }
+  
+  .donate-btn:hover {
+    background: linear-gradient(135deg, #4a5a3a 0%, #3a4a2a 100%);
+    box-shadow: 0 4px 12px rgba(90, 107, 70, 0.4);
+  }
+</style>

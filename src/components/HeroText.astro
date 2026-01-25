@@ -7,29 +7,145 @@ interface HeroTextData {
   subText: string;
 }
 
-// Fetch hero text data from Sanity
-const { data: heroTextData } = await loadQuery<HeroTextData>({
-  query: `*[_type == "heroText"][0]{mainText, subText}`,
-});
+// Default fallback values
+let mainText = "Help Us Save Lives";
+let subText = "Every cat deserves a loving home";
 
-const { mainText, subText } = heroTextData;
+// Fetch hero text data from Sanity
+try {
+  const { data: heroTextData } = await loadQuery<HeroTextData>({
+    query: `*[_type == "heroText"][0]{mainText, subText}`,
+  });
+  if (heroTextData) {
+    mainText = heroTextData.mainText || mainText;
+    subText = heroTextData.subText || subText;
+  }
+} catch (error) {
+  console.error("Failed to load hero text:", error);
+}
 ---
 
-<section class="flex flex-col items-center space-y-4 p-8">
-  <h2
-    class="text-5xl md:text-6xl font-bold text-center relative inline-block text-olive-800"
-  >
+<section class="hero-section flex flex-col items-center space-y-6 p-8 md:p-12">
+  <!-- Decorative paw prints -->
+  <div class="paw-decoration" aria-hidden="true">
+    <span class="paw paw-1">🐾</span>
+    <span class="paw paw-2">🐾</span>
+    <span class="paw paw-3">🐾</span>
+  </div>
+  
+  <h1 class="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-center text-olive-800 leading-tight">
     {mainText.split(" ").slice(0, -1).join(" ")}
-    <span
-      class="text-transparent bg-clip-text bg-gradient-to-r from-olive-600 to-olive-800 drop-shadow-[3px_3px_0_rgba(74,74,58,0.3)] text-6xl md:text-7xl uppercase font-extrabold"
-    >
+    <span class="hero-highlight block sm:inline">
       {mainText.split(" ").slice(-1)}
     </span>
-  </h2>
+  </h1>
 
-  <p class="md:text-base text-sm text-center text-olive-700">{subText}</p>
-  <div class="flex justify-center space-x-4">
-    <Button label="Save A Life" href={"/donate"} variant="primary" />
-    <Button label="View Our Cats" href={"/cats"} variant="secondary" />
+  <p class="hero-subtitle text-base md:text-lg lg:text-xl text-center text-olive-700 max-w-2xl leading-relaxed">
+    {subText}
+  </p>
+  
+  <div class="hero-buttons flex flex-col sm:flex-row justify-center gap-4 mt-4">
+    <Button label="Support Our Mission" href={"/donate"} variant="primary" size="large" />
+    <Button label="View Our Cats" href={"/cats"} variant="secondary" size="large" />
+  </div>
+  
+  <!-- Stats counter -->
+  <div class="hero-stats flex flex-wrap justify-center gap-8 mt-8 pt-8 border-t border-olive-200">
+    <div class="stat-item text-center">
+      <span class="stat-number text-3xl md:text-4xl font-bold text-olive-700">100+</span>
+      <span class="stat-label block text-sm text-olive-600 mt-1">Cats Rescued</span>
+    </div>
+    <div class="stat-item text-center">
+      <span class="stat-number text-3xl md:text-4xl font-bold text-olive-700">80+</span>
+      <span class="stat-label block text-sm text-olive-600 mt-1">Happy Adoptions</span>
+    </div>
+    <div class="stat-item text-center">
+      <span class="stat-number text-3xl md:text-4xl font-bold text-olive-700">50+</span>
+      <span class="stat-label block text-sm text-olive-600 mt-1">Foster Families</span>
+    </div>
   </div>
 </section>
+
+<style>
+  .hero-section {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .paw-decoration {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  
+  .paw {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .paw-1 { top: 10%; left: 10%; animation-delay: 0s; }
+  .paw-2 { top: 60%; right: 15%; animation-delay: 2s; }
+  .paw-3 { bottom: 20%; left: 20%; animation-delay: 4s; }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+  
+  .hero-title {
+    animation: slideUp 0.8s ease-out;
+  }
+  
+  .hero-highlight {
+    background: linear-gradient(135deg, #5a6b46 0%, #7b8d69 50%, #5a6b46 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: slideUp 0.8s ease-out 0.1s backwards, shimmer 3s ease-in-out infinite;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+  }
+  
+  .hero-subtitle {
+    animation: slideUp 0.8s ease-out 0.2s backwards;
+  }
+  
+  .hero-buttons {
+    animation: slideUp 0.8s ease-out 0.3s backwards;
+  }
+  
+  .hero-stats {
+    animation: slideUp 0.8s ease-out 0.4s backwards;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .stat-item {
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .stat-number {
+    font-variant-numeric: tabular-nums;
+  }
+</style>
