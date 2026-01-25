@@ -25,7 +25,9 @@ export default defineConfig({
     tailwind(),
     partytown(),
     react(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/studio/') && !page.includes('/faq'),
+    }),
   ],
   output: "static",
   site: "https://kokosrescue.com",
