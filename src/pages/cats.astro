@@ -160,12 +160,12 @@ try {
         cats.length > 0 ? (
           cats.map((cat) => (
             <div
-              class="cat-card w-full"
-              data-name={cat.name.toLowerCase()}
-              data-gender={cat.gender.toLowerCase()}
+              class="cat-filter-item w-full"
+              data-name={cat.name?.toLowerCase() || ""}
+              data-gender={cat.gender?.toLowerCase() || ""}
               data-age-group={
-                cat.age.toLowerCase().includes("month") ||
-                cat.age.toLowerCase().includes("week")
+                cat.age?.toLowerCase().includes("month") ||
+                cat.age?.toLowerCase().includes("week")
                   ? "kitten"
                   : "adult"
               }
@@ -218,115 +218,134 @@ try {
 
 <script>
   // Filter and search functionality
-  document.addEventListener("DOMContentLoaded", function () {
-    const catCards = document.querySelectorAll<HTMLElement>(".cat-card");
-    const filterButtons = document.querySelectorAll<HTMLElement>(".filter-btn");
-    const searchInput = document.getElementById(
-      "search-input"
-    ) as HTMLInputElement;
-    const visibleCountElement = document.getElementById("visible-count");
-    const noResultsElement = document.getElementById("no-results");
-    const resetFiltersButton = document.getElementById("reset-filters");
-    const catGrid = document.getElementById("cat-grid");
+  (function() {
+    // Use a flag to prevent multiple initializations
+    if ((window as any).__catsFilterInitialized) return;
+    (window as any).__catsFilterInitialized = true;
 
-    let activeFilter = "all";
-    let searchTerm = "";
+    function initFilters() {
+      const catGrid = document.getElementById("cat-grid");
+      if (!catGrid) return;
+      
+      const catCards = catGrid.querySelectorAll<HTMLElement>(".cat-filter-item");
+      const filterButtons = document.querySelectorAll<HTMLElement>(".filter-btn");
+      const searchInput = document.getElementById("search-input") as HTMLInputElement;
+      const visibleCountElement = document.getElementById("visible-count");
+      const noResultsElement = document.getElementById("no-results");
+      const resetFiltersButton = document.getElementById("reset-filters");
+      const totalCount = catCards.length;
 
-    // Filter button click handler
-    filterButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        // Remove active class from all buttons
-        filterButtons.forEach((btn) => btn.classList.remove("active"));
+      let activeFilter = "all";
+      let searchTerm = "";
 
-        // Add active class to clicked button
-        button.classList.add("active");
+      // Filter button click handler
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remove active class from all buttons
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
 
-        // Set active filter
-        const filter = button.getAttribute("data-filter");
-        activeFilter = filter || "all";
+          // Add active class to clicked button
+          button.classList.add("active");
 
-        // Apply filters
-        applyFilters();
+          // Set active filter
+          const filter = button.getAttribute("data-filter");
+          activeFilter = filter || "all";
+
+          // Apply filters
+          applyFilters();
+        });
       });
-    });
 
-    // Search input handler
-    if (searchInput) {
-      searchInput.addEventListener("input", (e) => {
-        const target = e.target as HTMLInputElement;
-        searchTerm = target.value.toLowerCase().trim();
-        applyFilters();
-      });
-    }
+      // Search input handler
+      if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+          const target = e.target as HTMLInputElement;
+          searchTerm = target.value.toLowerCase().trim();
+          applyFilters();
+        });
+      }
 
-    // Reset filters button
-    if (resetFiltersButton) {
-      resetFiltersButton.addEventListener("click", () => {
-        // Reset active filter
-        activeFilter = "all";
+      // Reset filters button
+      if (resetFiltersButton) {
+        resetFiltersButton.addEventListener("click", () => {
+          activeFilter = "all";
+          if (searchInput) {
+            searchInput.value = "";
+            searchTerm = "";
+          }
+          filterButtons.forEach((btn) => {
+            btn.classList.remove("active");
+            if (btn.getAttribute("data-filter") === "all") {
+              btn.classList.add("active");
+            }
+          });
+          applyFilters();
+        });
+      }
 
-        // Clear search
-        if (searchInput) {
-          searchInput.value = "";
-          searchTerm = "";
-        }
+      // Apply filters function
+      function applyFilters() {
+        let visibleCount = 0;
 
-        // Reset filter buttons
-        filterButtons.forEach((btn) => {
-          btn.classList.remove("active");
-          if (btn.getAttribute("data-filter") === "all") {
-            btn.classList.add("active");
+        catCards.forEach((card) => {
+          const name = (card.dataset.name || "").toLowerCase().trim();
+          const gender = (card.dataset.gender || "").toLowerCase().trim();
+          const ageGroup = (card.dataset.ageGroup || "").toLowerCase().trim();
+
+          // Check if card passes filter
+          let passesFilter = activeFilter === "all";
+          
+          if (!passesFilter) {
+            if (activeFilter === "male") {
+              passesFilter = gender === "male";
+            } else if (activeFilter === "female") {
+              passesFilter = gender === "female";
+            } else if (activeFilter === "kitten") {
+              passesFilter = ageGroup === "kitten";
+            } else if (activeFilter === "adult") {
+              passesFilter = ageGroup === "adult";
+            }
+          }
+
+          const passesSearchFilter = searchTerm === "" || name.includes(searchTerm);
+
+          if (passesFilter && passesSearchFilter) {
+            card.style.removeProperty("display");
+            card.removeAttribute("hidden");
+            visibleCount++;
+          } else {
+            card.style.display = "none";
           }
         });
 
-        // Apply filters
-        applyFilters();
-      });
-    }
-
-    // Apply filters function
-    function applyFilters() {
-      let visibleCount = 0;
-
-      catCards.forEach((card) => {
-        const name = card.getAttribute("data-name") || "";
-        const gender = card.getAttribute("data-gender") || "";
-        const ageGroup = card.getAttribute("data-age-group") || "";
-
-        // Check if card passes all filters
-        const passesGenderFilter =
-          activeFilter === "all" ||
-          (activeFilter === "male" && gender === "male") ||
-          (activeFilter === "female" && gender === "female") ||
-          (activeFilter === "kitten" && ageGroup === "kitten") ||
-          (activeFilter === "adult" && ageGroup === "adult");
-
-        const passesSearchFilter =
-          searchTerm === "" || name.includes(searchTerm);
-
-        if (passesGenderFilter && passesSearchFilter) {
-          card.style.display = "";
-          visibleCount++;
-        } else {
-          card.style.display = "none";
+        // Update visible count
+        if (visibleCountElement) {
+          visibleCountElement.textContent = visibleCount.toString();
         }
-      });
 
-      // Update visible count
+        // Show/hide no results message
+        if (noResultsElement && catGrid) {
+          if (visibleCount === 0) {
+            noResultsElement.classList.remove("hidden");
+            catGrid.style.display = "none";
+          } else {
+            noResultsElement.classList.add("hidden");
+            catGrid.style.removeProperty("display");
+          }
+        }
+      }
+
+      // Initial count update
       if (visibleCountElement) {
-        visibleCountElement.textContent = visibleCount.toString();
-      }
-
-      // Show/hide no results message
-      if (noResultsElement && catGrid) {
-        if (visibleCount === 0) {
-          noResultsElement.classList.remove("hidden");
-          catGrid.classList.add("hidden");
-        } else {
-          noResultsElement.classList.add("hidden");
-          catGrid.classList.remove("hidden");
-        }
+        visibleCountElement.textContent = totalCount.toString();
       }
     }
-  });
+
+    // Initialize on DOMContentLoaded
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initFilters);
+    } else {
+      initFilters();
+    }
+  })();
 </script>
